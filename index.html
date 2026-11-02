@@ -2476,6 +2476,542 @@ a {
   }
 }
 
+body.at-login {
+  background: #f2f5ef;
+}
+
+.login-page {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: minmax(430px, 1.12fr) minmax(430px, 0.88fr);
+}
+
+.login-visual {
+  position: relative;
+  min-height: 100vh;
+  padding: clamp(28px, 5vw, 70px);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+  background:
+    radial-gradient(circle at 86% 13%, rgba(223, 255, 115, 0.16), transparent 22rem),
+    linear-gradient(145deg, #062f23 0%, #0b4d39 64%, #0d5d46 100%);
+}
+
+.login-visual::before {
+  position: absolute;
+  top: -22%;
+  right: -14%;
+  width: 50vw;
+  height: 50vw;
+  content: "";
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 80px rgba(255, 255, 255, 0.025),
+    0 0 0 160px rgba(255, 255, 255, 0.018);
+}
+
+.login-brand {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.login-brand > div strong {
+  display: block;
+  font-family: "Noto Serif SC", "Songti SC", serif;
+  font-size: 22px;
+  letter-spacing: 0.05em;
+}
+
+.login-brand > div span {
+  display: block;
+  margin-top: 3px;
+  color: rgba(255, 255, 255, 0.56);
+  font-size: 10px;
+}
+
+.login-copy {
+  position: relative;
+  z-index: 2;
+  max-width: 680px;
+  margin: auto 0;
+  padding: 60px 0;
+}
+
+.login-copy h1 {
+  margin: 0;
+  font-family: "Noto Serif SC", "Songti SC", serif;
+  font-size: clamp(40px, 5vw, 68px);
+  line-height: 1.17;
+  letter-spacing: -0.055em;
+}
+
+.login-copy p {
+  max-width: 540px;
+  margin: 21px 0 0;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 14px;
+  line-height: 1.85;
+}
+
+.login-court {
+  position: relative;
+  z-index: 2;
+  height: 145px;
+}
+
+.login-court .court-art {
+  top: -30px;
+  right: 0;
+  width: min(430px, 70%);
+  height: 240px;
+  opacity: 0.23;
+}
+
+.login-facts {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 16px 0 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.login-facts span {
+  color: rgba(255, 255, 255, 0.46);
+  font-size: 9px;
+}
+
+.login-facts b {
+  display: block;
+  margin-bottom: 4px;
+  color: #fff;
+  font-size: 11px;
+}
+
+.login-panel {
+  padding: 40px clamp(28px, 6vw, 86px);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  background:
+    radial-gradient(circle at 95% 0%, rgba(223, 255, 115, 0.2), transparent 18rem),
+    #f7f9f4;
+}
+
+.login-card {
+  width: min(430px, 100%);
+  margin: 0 auto;
+  padding: clamp(24px, 3vw, 38px);
+  background: #fff;
+  border: 1px solid #e3e9e1;
+  border-radius: 24px;
+  box-shadow: 0 24px 70px rgba(25, 62, 44, 0.1);
+}
+
+.login-mobile-brand {
+  display: none;
+}
+
+.login-kicker {
+  color: var(--green-700);
+  font-size: 9px;
+  font-weight: 750;
+  letter-spacing: 0.15em;
+}
+
+.login-card h2 {
+  margin: 9px 0 0;
+  font-family: "Noto Serif SC", "Songti SC", serif;
+  font-size: 30px;
+}
+
+.login-card > p {
+  margin: 9px 0 23px;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.65;
+}
+
+.login-card .field + .field {
+  margin-top: 14px;
+}
+
+.login-card .field input {
+  min-height: 46px;
+  background: #f8faf7;
+}
+
+.login-error {
+  margin-top: 12px;
+  padding: 9px 11px;
+  color: #b83232;
+  font-size: 10px;
+  background: #fff0f0;
+  border: 1px solid #f2d5d5;
+  border-radius: 9px;
+}
+
+.login-submit {
+  width: 100%;
+  min-height: 48px;
+  margin-top: 18px;
+}
+
+.login-help {
+  width: min(430px, 100%);
+  margin: 14px auto 0;
+}
+
+.login-help > strong {
+  margin-bottom: 8px;
+  display: block;
+  color: #59665e;
+  font-size: 9px;
+}
+
+.login-help button {
+  width: 100%;
+  margin-top: 6px;
+  padding: 10px 12px;
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: 10px;
+  color: #47534b;
+  text-align: left;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid #e2e8e0;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.login-help button:hover {
+  background: #fff;
+  border-color: #cbdacf;
+}
+
+.login-help button span {
+  font-size: 10px;
+  font-weight: 650;
+}
+
+.login-help button code {
+  color: var(--green-700);
+  font-size: 10px;
+}
+
+.login-help button small {
+  color: var(--muted);
+  font-size: 9px;
+}
+
+.login-help > p {
+  margin: 9px 2px 0;
+  color: #8a948d;
+  font-size: 8px;
+  line-height: 1.6;
+}
+
+.user-badge {
+  max-width: 145px;
+  padding: 4px 9px 4px 4px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+}
+
+.user-badge .avatar {
+  width: 29px;
+  height: 29px;
+  color: var(--green-900);
+  font-size: 9px;
+  background: var(--lime);
+}
+
+.user-badge-copy {
+  min-width: 0;
+}
+
+.user-badge-copy strong,
+.user-badge-copy small {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.user-badge-copy strong {
+  font-size: 9px;
+}
+
+.user-badge-copy small {
+  margin-top: 1px;
+  color: rgba(255, 255, 255, 0.53);
+  font-size: 7px;
+}
+
+.score-task {
+  margin-bottom: 12px;
+  padding: 14px 15px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: linear-gradient(100deg, #f3f9f5, #fbfdf7);
+  border: 1px solid #d8e9df;
+  border-radius: 15px;
+  box-shadow: var(--shadow-soft);
+}
+
+.score-task-icon {
+  width: 38px;
+  height: 38px;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  color: var(--green-800);
+  background: var(--lime);
+  border-radius: 11px;
+}
+
+.score-task-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.score-task-copy {
+  min-width: 0;
+  flex: 1;
+}
+
+.score-task-copy > span,
+.score-task-copy > small {
+  display: block;
+  color: var(--muted);
+  font-size: 8px;
+}
+
+.score-task-copy > span {
+  margin-bottom: 3px;
+  color: var(--green-700);
+  font-weight: 750;
+  letter-spacing: 0.05em;
+}
+
+.score-task-copy strong {
+  display: block;
+  overflow: hidden;
+  margin-bottom: 3px;
+  font-size: 11px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.score-task-copy strong i {
+  margin: 0 5px;
+  color: var(--muted);
+  font-size: 8px;
+  font-style: normal;
+}
+
+.score-row-button {
+  min-height: 31px;
+  flex: 0 0 auto;
+  padding: 5px 9px;
+  font-size: 9px;
+}
+
+.slot-readonly {
+  min-height: 54px;
+  display: grid;
+  place-items: center;
+  color: #b1b9b2;
+  font-size: 9px;
+}
+
+.profile-banner {
+  margin-bottom: 8px;
+  padding: 13px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #f3f8f4;
+  border: 1px solid #e0ebe3;
+  border-radius: 13px;
+}
+
+.profile-banner .avatar {
+  width: 39px;
+  height: 39px;
+}
+
+.profile-banner strong {
+  display: block;
+  font-size: 12px;
+}
+
+.profile-banner span {
+  display: block;
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 9px;
+}
+
+.account-toolbar {
+  padding-bottom: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  color: var(--muted);
+  font-size: 9px;
+  border-bottom: 1px solid #edf0ea;
+}
+
+.account-list {
+  display: grid;
+  gap: 7px;
+  margin-top: 12px;
+}
+
+.account-row {
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  background: #f8faf7;
+  border: 1px solid #edf0ea;
+  border-radius: 11px;
+}
+
+@media (max-width: 920px) {
+  .login-page {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .login-visual {
+    display: none;
+  }
+
+  .login-panel {
+    min-height: 100vh;
+    padding: 26px 18px;
+    justify-content: center;
+  }
+
+  .login-mobile-brand {
+    width: 46px;
+    height: 46px;
+    margin-bottom: 25px;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    background: var(--lime);
+    border-radius: 14px;
+  }
+
+  .login-mobile-brand svg {
+    width: 31px;
+    height: 31px;
+  }
+}
+
+@media (max-width: 820px) {
+  .topbar {
+    gap: 9px;
+  }
+
+  .top-actions {
+    gap: 7px;
+  }
+
+  .user-badge {
+    padding: 3px;
+  }
+
+  .user-badge-copy {
+    display: none;
+  }
+
+  .user-badge .avatar {
+    width: 28px;
+    height: 28px;
+  }
+
+  .score-task {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .score-task-copy {
+    width: calc(100% - 52px);
+  }
+
+  .score-task > .button {
+    width: 100%;
+    margin-top: 3px;
+  }
+
+  .account-row {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .account-row .table-actions {
+    width: 100%;
+  }
+
+  .account-row .table-actions .button {
+    flex: 1;
+  }
+}
+
+@media (max-width: 520px) {
+  .login-card {
+    padding: 23px 19px;
+    border-radius: 20px;
+  }
+
+  .login-card h2 {
+    font-size: 28px;
+  }
+
+  .login-help button {
+    grid-template-columns: 1fr auto;
+  }
+
+  .login-help button small {
+    display: none;
+  }
+
+  .group-match-row {
+    align-items: stretch;
+    flex-wrap: wrap;
+  }
+
+  .group-match-row .match-names {
+    width: 100%;
+  }
+
+  .score-row-button {
+    width: 100%;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -3026,6 +3562,7 @@ button.management-row:hover {
   "use strict";
 
   const STORAGE_KEY = "yusaitong-tournament-v1";
+  const SESSION_KEY = "yusaitong-session-v1";
   const EVENT_META = {
     ms: { name: "男子单打", short: "男单", mark: "M", order: 1 },
     ws: { name: "女子单打", short: "女单", mark: "W", order: 2 },
@@ -3033,12 +3570,14 @@ button.management-row:hover {
   };
   const STAGE_LABELS = {
     group: "小组赛",
+    round32: "32强赛",
+    round16: "16强赛",
     quarter: "八强赛",
     semi: "半决赛",
     final: "冠亚军决赛",
     third: "三、四名赛",
   };
-  const STAGE_ORDER = { group: 1, quarter: 2, semi: 3, third: 4, final: 5 };
+  const STAGE_ORDER = { group: 1, round32: 2, round16: 3, quarter: 4, semi: 5, third: 6, final: 7 };
   const GROUP_NAMES = ["A", "B", "C", "D"];
   const DEFAULT_TIMES = [
     "09:00", "09:30", "10:00", "10:30", "11:00",
@@ -3055,6 +3594,7 @@ button.management-row:hover {
     modal: null,
     sortKey: "name",
     sortDirection: 1,
+    loginError: "",
   };
   let toastTimer = 0;
 
@@ -3179,12 +3719,32 @@ button.management-row:hover {
         venue: "警体馆三楼",
         date: "2026-11-13",
         times: [...DEFAULT_TIMES],
-        rules: "21分制，一局定胜负，11分交换场地；ABCD四组，每组前两名晋级八强。",
+        rules: "21分制，一局定胜负，11分交换场地；男单、女单全程淘汰；混双分ABCD四组，每组前两名晋级八强。",
         demo: true,
       },
       participants: demoParticipants(),
       staff: initialStaff(),
       courts: initialCourts(),
+      accounts: [
+        {
+          id: "account-admin",
+          username: "admin",
+          displayName: "赛事管理员",
+          role: "admin",
+          passwordHash: "a36aef5a11c4073fbe60314fc9df530a9d5f986533594d1f5190742ff9e0e408",
+          active: true,
+          defaultAccount: true,
+        },
+        {
+          id: "account-viewer",
+          username: "staff",
+          displayName: "赛事查看员",
+          role: "viewer",
+          passwordHash: "59b2a257b53ecdd7b19fec7b5050ac33ddda40e5ac5c9fe21de5bc32d96abb3a",
+          active: true,
+          defaultAccount: true,
+        },
+      ],
       draws: {},
     };
   }
@@ -3194,12 +3754,7 @@ button.management-row:hover {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (!saved) return defaultState();
       const parsed = JSON.parse(saved);
-      return {
-        ...defaultState(),
-        ...parsed,
-        config: { ...defaultState().config, ...(parsed.config || {}) },
-        draws: parsed.draws || {},
-      };
+      return normalizeState(parsed);
     } catch (error) {
       console.warn("读取本地数据失败", error);
       return defaultState();
@@ -3208,6 +3763,97 @@ button.management-row:hover {
 
   function saveState() {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  }
+
+  function normalizeState(parsed) {
+    const defaults = defaultState();
+    if (!parsed || typeof parsed !== "object") return defaults;
+    const normalized = {
+      ...defaults,
+      ...parsed,
+      config: { ...defaults.config, ...(parsed.config || {}) },
+      accounts: Array.isArray(parsed.accounts) && parsed.accounts.length
+        ? parsed.accounts
+        : defaults.accounts,
+      draws: parsed.draws || {},
+      staff: Array.isArray(parsed.staff) ? parsed.staff : defaults.staff,
+      courts: Array.isArray(parsed.courts) ? parsed.courts : defaults.courts,
+      participants: Array.isArray(parsed.participants) ? parsed.participants : defaults.participants,
+    };
+    if (normalized.draws.ms && normalized.draws.ms.mode !== "knockout") {
+      delete normalized.draws.ms;
+    }
+    if (normalized.draws.ws && normalized.draws.ws.mode !== "knockout") {
+      delete normalized.draws.ws;
+    }
+    return normalized;
+  }
+
+  function bytesToBase64(bytes) {
+    let binary = "";
+    const step = 8192;
+    for (let index = 0; index < bytes.length; index += step) {
+      binary += String.fromCharCode(...bytes.subarray(index, index + step));
+    }
+    return btoa(binary);
+  }
+
+  function base64ToBytes(value) {
+    const binary = atob(value);
+    const bytes = new Uint8Array(binary.length);
+    for (let index = 0; index < binary.length; index += 1) {
+      bytes[index] = binary.charCodeAt(index);
+    }
+    return bytes;
+  }
+
+  function toBase64Url(value) {
+    return value.replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/g, "");
+  }
+
+  function fromBase64Url(value) {
+    const normalized = value.replace(/-/g, "+").replace(/_/g, "/");
+    return normalized + "=".repeat((4 - normalized.length % 4) % 4);
+  }
+
+  async function buildSyncLink() {
+    const bytes = new TextEncoder().encode(JSON.stringify(state));
+    let payload = bytes;
+    let prefix = "b1";
+    if (window.CompressionStream) {
+      const stream = new Blob([bytes]).stream().pipeThrough(new CompressionStream("gzip"));
+      payload = new Uint8Array(await new Response(stream).arrayBuffer());
+      prefix = "g1";
+    }
+    const baseUrl = window.location.href.replace(/[?#].*$/, "");
+    return `${baseUrl}?sync=${prefix}.${encodeURIComponent(toBase64Url(bytesToBase64(payload)))}`;
+  }
+
+  async function copySyncLink() {
+    const link = await buildSyncLink();
+    await copyText(link);
+    toast("包含最新名单与赛程的同步链接已复制");
+  }
+
+  async function consumeSharedState() {
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get("sync");
+    if (!token) return false;
+    const [prefix, encoded] = token.split(".", 2);
+    if (!encoded || !["g1", "b1"].includes(prefix)) return false;
+    let bytes = base64ToBytes(fromBase64Url(decodeURIComponent(encoded)));
+    if (prefix === "g1") {
+      if (!window.DecompressionStream) throw new Error("当前浏览器不支持解压同步数据");
+      const stream = new Blob([bytes]).stream().pipeThrough(new DecompressionStream("gzip"));
+      bytes = new Uint8Array(await new Response(stream).arrayBuffer());
+    }
+    const parsed = JSON.parse(new TextDecoder().decode(bytes));
+    state = normalizeState(parsed);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    ui.scheduleDate = state.config.date;
+    const cleanUrl = `${window.location.origin}${window.location.pathname}${window.location.hash || "#overview"}`;
+    window.history.replaceState(null, "", cleanUrl);
+    return true;
   }
 
   function getInitialView() {
@@ -3228,6 +3874,29 @@ button.management-row:hover {
 
   function initials(name) {
     return [...String(name || "?").replace(/\s/g, "")].slice(-2).join("");
+  }
+
+  function currentAccount() {
+    const accountId = sessionStorage.getItem(SESSION_KEY);
+    if (!accountId) return null;
+    const account = state.accounts.find((item) => item.id === accountId && item.active !== false) || null;
+    if (!account) sessionStorage.removeItem(SESSION_KEY);
+    return account;
+  }
+
+  function isAdmin() {
+    return currentAccount()?.role === "admin";
+  }
+
+  function roleLabel(role) {
+    return role === "admin" ? "管理员" : "查看账号";
+  }
+
+  async function hashPassword(password) {
+    if (!window.crypto?.subtle) return String(password);
+    const bytes = new TextEncoder().encode(String(password));
+    const digest = await window.crypto.subtle.digest("SHA-256", bytes);
+    return [...new Uint8Array(digest)].map((byte) => byte.toString(16).padStart(2, "0")).join("");
   }
 
   function eventName(code) {
@@ -3268,6 +3937,7 @@ button.management-row:hover {
     const draw = state.draws[match.event];
     if (!draw) return "待定";
     const teamId = side === "a" ? match.teamAId : match.teamBId;
+    if (!teamId && match.isBye) return "轮空";
     return getTeam(draw, teamId)?.name || "待定";
   }
 
@@ -3314,6 +3984,7 @@ button.management-row:hover {
           id: makeId("team"),
           name: entry.name,
           department: entry.department,
+          seed: Boolean(entry.seed),
           memberIds: [entry.id],
           memberPersonIds: [entry.personId],
           members: [{ name: entry.name, department: entry.department, pool: "" }],
@@ -3334,6 +4005,7 @@ button.management-row:hover {
         id: makeId("team"),
         name: `${a.name} / ${b.name}`,
         department: [...new Set([a.department, b.department])].join("、"),
+        seed: Boolean(a.seed || b.seed),
         memberIds: [a.id, b.id],
         memberPersonIds: [a.personId, b.personId],
         members: [
@@ -3379,6 +4051,146 @@ button.management-row:hover {
     return matches;
   }
 
+  function stageForMatchCount(count) {
+    if (count === 1) return "final";
+    if (count === 2) return "semi";
+    if (count === 4) return "quarter";
+    if (count === 8) return "round16";
+    if (count === 16) return "round32";
+    return `round${count * 2}`;
+  }
+
+  function createKnockoutSkeleton(teams, event) {
+    let bracketSize = 2;
+    while (bracketSize < teams.length) bracketSize *= 2;
+    const slots = Array(bracketSize).fill(null);
+    const seededTeams = shuffle(teams.filter((team) => team.seed));
+    const seededIds = new Set(seededTeams.map((team) => team.id));
+    seededTeams.forEach((team, index) => {
+      const position = Math.floor((index + 0.5) * bracketSize / Math.max(seededTeams.length, 1));
+      let target = Math.min(bracketSize - 1, position);
+      while (slots[target]) target = (target + 1) % bracketSize;
+      slots[target] = team.id;
+    });
+    const remaining = shuffle(teams.filter((team) => !seededIds.has(team.id)).map((team) => team.id));
+    let remainingIndex = 0;
+    const fillOrder = [
+      ...Array.from({ length: bracketSize / 2 }, (_, index) => index * 2),
+      ...Array.from({ length: bracketSize / 2 }, (_, index) => index * 2 + 1),
+    ];
+    for (const index of fillOrder) {
+      if (!slots[index] && remainingIndex < remaining.length) {
+        slots[index] = remaining[remainingIndex];
+        remainingIndex += 1;
+      }
+    }
+
+    const rounds = [];
+    let currentIds = slots;
+    let roundIndex = 0;
+    while (currentIds.length > 1) {
+      const matchCount = currentIds.length / 2;
+      const stage = stageForMatchCount(matchCount);
+      const round = [];
+      for (let index = 0; index < matchCount; index += 1) {
+        const teamAId = currentIds[index * 2] || null;
+        const teamBId = currentIds[index * 2 + 1] || null;
+        round.push({
+          id: makeId("match"),
+          event,
+          stage,
+          roundIndex,
+          group: "",
+          teamAId,
+          teamBId,
+          scoreA: null,
+          scoreB: null,
+          winnerId: teamAId && !teamBId ? teamAId : (!teamAId && teamBId ? teamBId : null),
+          loserId: null,
+          isBye: Boolean((teamAId && !teamBId) || (!teamAId && teamBId)),
+          schedule: null,
+        });
+      }
+      rounds.push(round);
+      currentIds = round.map((match) => match.winnerId);
+      roundIndex += 1;
+    }
+
+    for (let roundIndexValue = 0; roundIndexValue < rounds.length - 1; roundIndexValue += 1) {
+      rounds[roundIndexValue].forEach((match, index) => {
+        match.nextMatchId = rounds[roundIndexValue + 1][Math.floor(index / 2)].id;
+        match.nextSlot = index % 2 === 0 ? "A" : "B";
+      });
+    }
+
+    const semiRound = rounds.find((round) => round[0]?.stage === "semi");
+    let thirdPlace = null;
+    if (semiRound && semiRound.length === 2) {
+      thirdPlace = {
+        id: makeId("match"),
+        event,
+        stage: "third",
+        roundIndex: semiRound[0].roundIndex,
+        group: "",
+        teamAId: null,
+        teamBId: null,
+        scoreA: null,
+        scoreB: null,
+        winnerId: null,
+        loserId: null,
+        isThirdPlace: true,
+        schedule: null,
+      };
+      semiRound[0].loserNextMatchId = thirdPlace.id;
+      semiRound[0].loserNextSlot = "A";
+      semiRound[1].loserNextMatchId = thirdPlace.id;
+      semiRound[1].loserNextSlot = "B";
+    }
+    return [
+      ...rounds.flat(),
+      ...(thirdPlace ? [thirdPlace] : []),
+    ].sort((left, right) => {
+      if (left.stage === "third") return -1;
+      if (right.stage === "third") return 1;
+      return left.roundIndex - right.roundIndex;
+    });
+  }
+
+  function updateKnockoutProgression(draw) {
+    const progressionMatches = draw.matches
+      .filter((match) => match.stage !== "third")
+      .sort((left, right) => left.roundIndex - right.roundIndex);
+    const byId = Object.fromEntries(draw.matches.map((match) => [match.id, match]));
+    progressionMatches.forEach((match) => {
+      if (match.nextMatchId) {
+        const next = byId[match.nextMatchId];
+        if (next) {
+          const slotKey = match.nextSlot === "A" ? "teamAId" : "teamBId";
+          if (next[slotKey] !== (match.winnerId || null)) {
+            next[slotKey] = match.winnerId || null;
+            next.scoreA = null;
+            next.scoreB = null;
+            next.winnerId = null;
+            next.loserId = null;
+          }
+        }
+      }
+      if (match.loserNextMatchId) {
+        const consolation = byId[match.loserNextMatchId];
+        if (consolation) {
+          const slotKey = match.loserNextSlot === "A" ? "teamAId" : "teamBId";
+          if (consolation[slotKey] !== (match.loserId || null)) {
+            consolation[slotKey] = match.loserId || null;
+            consolation.scoreA = null;
+            consolation.scoreB = null;
+            consolation.winnerId = null;
+            consolation.loserId = null;
+          }
+        }
+      }
+    });
+  }
+
   function createDraw(code) {
     if (!EVENT_META[code]) throw new Error("比赛项目不存在");
     if (code === "xd") {
@@ -3387,25 +4199,38 @@ button.management-row:hover {
       if (poolA.length < 2 || poolB.length < 2) {
         throw new Error("混双抽签至少需要 A、B 组各 2 人");
       }
-    } else if (entriesFor(code).length < 4) {
-      throw new Error(`${eventName(code)}至少需要 4 名参赛人员`);
+    } else if (entriesFor(code).length < 2) {
+      throw new Error(`${eventName(code)}至少需要 2 名参赛人员`);
     }
 
     const { teams, pairing, unpaired } = createTeams(code);
-    if (teams.length < 4) {
-      throw new Error("可参与抽签的组合不足 4 组");
+    let resultsMode = code === "xd" ? "groups" : "knockout";
+    let groupBuckets = null;
+    let matches;
+    if (resultsMode === "knockout") {
+      matches = createKnockoutSkeleton(teams, code);
+    } else {
+      if (teams.length < 4) throw new Error("混双可参与比赛的组合不足 4 组");
+      groupBuckets = { A: [], B: [], C: [], D: [] };
+      const seeded = shuffle(teams.filter((team) => team.seed));
+      seeded.forEach((team, index) => {
+        groupBuckets[GROUP_NAMES[index % GROUP_NAMES.length]].push(team.id);
+      });
+      const remaining = shuffle(teams.filter((team) => !team.seed));
+      remaining.forEach((team) => {
+        const target = GROUP_NAMES
+          .slice()
+          .sort((left, right) => groupBuckets[left].length - groupBuckets[right].length)[0];
+        groupBuckets[target].push(team.id);
+      });
+      matches = GROUP_NAMES.flatMap((group) =>
+        roundRobinMatches(groupBuckets[group], code, group)
+      );
     }
-    const groupBuckets = { A: [], B: [], C: [], D: [] };
-    shuffle(teams).forEach((team, index) => {
-      groupBuckets[GROUP_NAMES[index % GROUP_NAMES.length]].push(team.id);
-    });
-
-    const matches = GROUP_NAMES.flatMap((group) =>
-      roundRobinMatches(groupBuckets[group], code, group)
-    );
 
     state.draws[code] = {
       event: code,
+      mode: resultsMode,
       createdAt: new Date().toISOString(),
       entrySignature: entrySignature(code),
       teams,
@@ -3596,16 +4421,18 @@ button.management-row:hover {
     const found = findMatch(matchId);
     if (!found) throw new Error("未找到该场比赛");
     const { draw, match } = found;
-    if (match.stage === "group" && getStageMatches(draw, "quarter").length) {
-      throw new Error("八强已生成，如需修改小组比分，请先重新抽签");
-    }
-    if (match.stage === "quarter" && getStageMatches(draw, "semi").length) {
-      throw new Error("半决赛已生成，不能修改八强比分");
-    }
-    if (["semi", "final", "third"].includes(match.stage)) {
-      const hasNext = getStageMatches(draw, "final").length > 0;
-      if (match.stage === "semi" && hasNext) {
-        throw new Error("决赛对阵已生成，不能修改半决赛比分");
+    if (draw.mode !== "knockout") {
+      if (match.stage === "group" && getStageMatches(draw, "quarter").length) {
+        throw new Error("八强已生成，如需修改小组比分，请先重新抽签");
+      }
+      if (match.stage === "quarter" && getStageMatches(draw, "semi").length) {
+        throw new Error("半决赛已生成，不能修改八强比分");
+      }
+      if (["semi", "final", "third"].includes(match.stage)) {
+        const hasNext = getStageMatches(draw, "final").length > 0;
+        if (match.stage === "semi" && hasNext) {
+          throw new Error("决赛对阵已生成，不能修改半决赛比分");
+        }
       }
     }
     const a = Number(scoreA);
@@ -3615,6 +4442,19 @@ button.management-row:hover {
     }
     if (a === b) throw new Error("一局定胜负，比分不能相同");
     if (Math.max(a, b) < 21) throw new Error("胜方至少达到 21 分");
+    if (draw.mode === "knockout") {
+      const downstreamIds = [match.nextMatchId, match.loserNextMatchId].filter(Boolean);
+      if (downstreamIds.some((id) => draw.matches.find((item) => item.id === id)?.winnerId)) {
+        throw new Error("后续轮次已经产生成绩，如需修改请重新抽签");
+      }
+      match.scoreA = a;
+      match.scoreB = b;
+      match.winnerId = a > b ? match.teamAId : match.teamBId;
+      match.loserId = a > b ? match.teamBId : match.teamAId;
+      updateKnockoutProgression(draw);
+      saveState();
+      return;
+    }
     match.scoreA = a;
     match.scoreB = b;
     match.winnerId = a > b ? match.teamAId : match.teamBId;
@@ -3764,7 +4604,78 @@ button.management-row:hover {
     renderApp();
   }
 
+  function renderLogin() {
+    const app = document.getElementById("app");
+    document.body.classList.add("at-login");
+    app.innerHTML = `
+      <main class="login-page">
+        <section class="login-visual">
+          <div class="login-brand">
+            <span class="brand-mark">${brandMark()}</span>
+            <div><strong>羽赛通</strong><span>运动会羽毛球项目调度台</span></div>
+          </div>
+          <div class="login-copy">
+            <span class="eyebrow">LIVE TOURNAMENT DESK</span>
+            <h1>抽签、比分、场地，<br />由管理员统一掌控。</h1>
+            <p>管理员完成报名、抽签与排程；赛事账号登录后即可查看最新分组、比分和当日赛程。</p>
+          </div>
+          <div class="login-court" aria-hidden="true">
+            <div class="court-art">
+              <div class="court-line outer"></div>
+              <div class="court-line half"></div>
+              <div class="court-line long"></div>
+              <div class="court-line short"></div>
+              <div class="court-line service"></div>
+              <div class="net"></div>
+              <div class="shuttle"></div>
+            </div>
+            <div class="login-facts">
+              <span><b>${esc(formatDate(state.config.date, true))}</b>比赛日</span>
+              <span><b>${esc(state.config.venue)}</b>比赛地点</span>
+              <span><b>21分</b>一局定胜负</span>
+            </div>
+          </div>
+        </section>
+        <section class="login-panel">
+          <form class="login-card" id="login-form" data-form="login">
+            <div class="login-mobile-brand">${brandMark()}</div>
+            <span class="login-kicker">赛事人员入口</span>
+            <h2>登录羽赛通</h2>
+            <p>管理员可编辑全部赛程，其他账号为只读查看权限。</p>
+            <div class="field">
+              <label for="login-username">账号</label>
+              <input id="login-username" name="username" autocomplete="username" required placeholder="请输入账号" />
+            </div>
+            <div class="field">
+              <label for="login-password">密码</label>
+              <input id="login-password" name="password" type="password" autocomplete="current-password" required placeholder="请输入密码" />
+            </div>
+            ${ui.loginError ? `<div class="login-error">${esc(ui.loginError)}</div>` : ""}
+            <button class="button dark login-submit" type="submit">登录查看赛事 ${icons.arrow}</button>
+          </form>
+          <div class="login-help">
+            <strong>首次使用默认账号</strong>
+            <button type="button" data-action="fill-login" data-role="admin">
+              <span>管理员</span><code>admin</code><small>Admin@2026</small>
+            </button>
+            <button type="button" data-action="fill-login" data-role="viewer">
+              <span>查看账号</span><code>staff</code><small>Staff@2026</small>
+            </button>
+            <p>管理员登录后可在“设置 → 账号与权限”创建其他账号并修改密码。</p>
+          </div>
+        </section>
+      </main>
+    `;
+  }
+
   function renderApp() {
+    const account = currentAccount();
+    if (!account) {
+      renderLogin();
+      renderModal();
+      return;
+    }
+    document.body.classList.remove("at-login");
     const activeItem = navItems.find((item) => item.id === ui.view) || navItems[0];
     const app = document.getElementById("app");
     app.innerHTML = `
@@ -3778,10 +4689,17 @@ button.management-row:hover {
             </div>
           </div>
           <div class="top-actions">
-            <span class="live-chip">${state.config.demo ? "示例数据可编辑" : "本地数据已保存"}</span>
-            <button class="header-icon-button" type="button" data-action="open-participant" aria-label="快速新增参赛人员">
-              ${icons.plus}
-            </button>
+            <span class="live-chip">${account.role === "admin" ? "数据保存在本机" : "赛事查看账号"}</span>
+            <span class="user-badge" title="${esc(account.displayName)}">
+              <span class="avatar">${esc(initials(account.displayName))}</span>
+              <span class="user-badge-copy"><strong>${esc(account.displayName)}</strong><small>${roleLabel(account.role)}</small></span>
+            </span>
+            ${account.role === "admin" ? `
+              <button class="header-icon-button" type="button" data-action="open-participant" aria-label="快速新增参赛人员">
+                ${icons.plus}
+              </button>
+            ` : ""}
+            <button class="header-icon-button" type="button" data-action="logout" aria-label="退出登录">${icons.left}</button>
           </div>
         </header>
         <nav class="desktop-tabs" aria-label="主导航">
@@ -3817,6 +4735,7 @@ button.management-row:hover {
   }
 
   function renderOverview() {
+    const admin = isAdmin();
     const uniquePeople = new Set(state.participants.map((entry) => entry.personId)).size;
     const stats = scheduleStats();
     const upcoming = scheduledMatches().filter((match) => !match.winnerId).slice(0, 3);
@@ -3834,12 +4753,21 @@ button.management-row:hover {
           <h1>挥拍警体馆，<br />让每一场都准时开场。</h1>
           <p>${esc(state.config.venue)}，21分制。从报名录入、ABCD 小组抽签到场地与裁判调度，一张页面完成羽毛球项目全流程管理。</p>
           <div class="hero-actions">
-            <button class="button primary" type="button" data-action="open-participant">
-              ${icons.plus} 录入参赛人员
-            </button>
-            <button class="button ghost" type="button" data-nav="draw">
-              ${icons.shuffle} 开始抽签 ${icons.arrow}
-            </button>
+            ${admin ? `
+              <button class="button primary" type="button" data-action="open-participant">
+                ${icons.plus} 录入参赛人员
+              </button>
+              <button class="button ghost" type="button" data-nav="draw">
+                ${icons.shuffle} 开始抽签 ${icons.arrow}
+              </button>
+            ` : `
+              <button class="button primary" type="button" data-nav="dispatch">
+                ${icons.calendar} 查看今日赛程 ${icons.arrow}
+              </button>
+              <button class="button ghost" type="button" data-nav="draw">
+                ${icons.draw} 查看分组比分
+              </button>
+            `}
           </div>
         </div>
         <div class="hero-side" aria-hidden="true">
@@ -3910,21 +4838,28 @@ button.management-row:hover {
             </div>
           </div>
           <div class="quick-grid">
-            <button class="quick-action" type="button" data-action="open-participant">
-              <span class="quick-icon">${icons.plus}</span>
-              <span><strong>新增选手</strong><span>单条录入报名信息</span></span>
-            </button>
+            ${admin ? `
+              <button class="quick-action" type="button" data-action="open-participant">
+                <span class="quick-icon">${icons.plus}</span>
+                <span><strong>新增选手</strong><span>单条录入报名信息</span></span>
+              </button>
+            ` : `
+              <button class="quick-action" type="button" data-nav="participants">
+                <span class="quick-icon">${icons.users}</span>
+                <span><strong>参赛名单</strong><span>查看全部项目报名</span></span>
+              </button>
+            `}
             <button class="quick-action" type="button" data-nav="draw">
               <span class="quick-icon">${icons.shuffle}</span>
-              <span><strong>随机抽签</strong><span>自动完成 ABCD 分组</span></span>
+              <span><strong>${admin ? "随机抽签" : "查看抽签"}</strong><span>${admin ? "自动完成 ABCD 分组" : "ABCD 分组与比分"}</span></span>
             </button>
-            <button class="quick-action" type="button" data-action="auto-schedule">
+            <button class="quick-action" type="button" ${admin ? `data-action="auto-schedule"` : `data-nav="dispatch"`}>
               <span class="quick-icon">${icons.wand}</span>
-              <span><strong>一键排程</strong><span>检测选手和场地冲突</span></span>
+              <span><strong>${admin ? "一键排程" : "场地调度"}</strong><span>${admin ? "检测选手和场地冲突" : "查看时间与场地安排"}</span></span>
             </button>
             <button class="quick-action" type="button" data-nav="settings">
-              <span class="quick-icon">${icons.upload}</span>
-              <span><strong>数据备份</strong><span>导入或导出全部数据</span></span>
+              <span class="quick-icon">${admin ? icons.upload : icons.settings}</span>
+              <span><strong>${admin ? "数据备份" : "我的账号"}</strong><span>${admin ? "导入或导出全部数据" : "查看当前登录权限"}</span></span>
             </button>
           </div>
         </section>
@@ -3945,12 +4880,20 @@ button.management-row:hover {
           ${Object.keys(EVENT_META).map((code) => {
             const draw = getDraw(code);
             const result = resultsFor(code);
-            const groupDone = draw ? draw.matches.filter((match) => match.stage === "group" && match.winnerId).length : 0;
-            const groupTotal = draw ? draw.matches.filter((match) => match.stage === "group").length : 0;
+            const done = draw
+              ? draw.mode === "knockout"
+                ? draw.matches.filter((match) => match.winnerId && !match.isBye).length
+                : draw.matches.filter((match) => match.stage === "group" && match.winnerId).length
+              : 0;
+            const total = draw
+              ? draw.mode === "knockout"
+                ? Math.max(draw.teams.length - 1, 0) + (draw.teams.length >= 4 ? 1 : 0)
+                : draw.matches.filter((match) => match.stage === "group").length
+              : 0;
             return `
               <button type="button" class="stat-card" data-action="select-draw" data-event="${code}" style="text-align:left;cursor:pointer">
                 <span>${esc(eventName(code))}</span>
-                <strong>${result ? "已完赛" : draw ? `${groupDone}<small> / ${groupTotal} 场</small>` : "未抽签"}</strong>
+                <strong>${result ? "已完赛" : draw ? `${done}<small> / ${total} 场</small>` : "未抽签"}</strong>
               </button>
             `;
           }).join("")}
@@ -3988,6 +4931,7 @@ button.management-row:hover {
   }
 
   function renderParticipants() {
+    const admin = isAdmin();
     const entries = filteredParticipants();
     const uniquePeople = new Set(state.participants.map((entry) => entry.personId)).size;
     const male = new Set(state.participants.filter((entry) => entry.gender === "M").map((entry) => entry.personId)).size;
@@ -3999,11 +4943,13 @@ button.management-row:hover {
       <div class="page-heading">
         <div>
           <h1>参赛人员</h1>
-          <p>管理男单、女单与混双报名；混双请明确选择 A 组或 B 组。</p>
+          <p>${admin ? "管理男单、女单与混双报名；混双请明确选择 A 组或 B 组。" : "当前账号为只读权限，可查看赛事名单与分组信息。"}</p>
         </div>
         <div class="heading-actions">
-          <button class="button" type="button" data-action="open-batch-import">${icons.upload} 批量导入</button>
-          <button class="button dark" type="button" data-action="open-participant">${icons.plus} 新增人员</button>
+          ${admin ? `
+            <button class="button" type="button" data-action="open-batch-import">${icons.upload} 批量导入</button>
+            <button class="button dark" type="button" data-action="open-participant">${icons.plus} 新增人员</button>
+          ` : `<span class="status-pill">只读名单</span>`}
         </div>
       </div>
 
@@ -4029,7 +4975,7 @@ button.management-row:hover {
         </div>
         <div class="toolbar-right">
           <span style="color:var(--muted);font-size:10px">共 ${entries.length} 条报名记录</span>
-          <button class="button small" type="button" data-action="export-csv">${icons.download} 导出名单</button>
+          ${admin ? `<button class="button small" type="button" data-action="export-csv">${icons.download} 导出名单</button>` : ""}
         </div>
       </div>
       <div class="chip-row">
@@ -4072,8 +5018,10 @@ button.management-row:hover {
                   <td>${esc(entry.phone || "—")}</td>
                   <td>
                     <div class="table-actions">
-                      <button class="button icon-only small" type="button" data-action="edit-participant" data-id="${entry.id}" aria-label="编辑">${icons.edit}</button>
-                      <button class="button icon-only small danger" type="button" data-action="delete-participant" data-id="${entry.id}" aria-label="删除">${icons.trash}</button>
+                      ${admin ? `
+                        <button class="button icon-only small" type="button" data-action="edit-participant" data-id="${entry.id}" aria-label="编辑">${icons.edit}</button>
+                        <button class="button icon-only small danger" type="button" data-action="delete-participant" data-id="${entry.id}" aria-label="删除">${icons.trash}</button>
+                      ` : '<span style="color:var(--muted);font-size:9px">只读</span>'}
                     </div>
                   </td>
                 </tr>
@@ -4097,8 +5045,10 @@ button.management-row:hover {
                   ${entry.event === "xd" ? `<span class="status-pill">${esc(entry.pool)} 池</span>` : ""}
                   <span style="color:var(--muted);font-size:10px">${esc(entry.phone || "未留电话")}</span>
                   <div class="table-actions" style="margin-left:auto">
-                    <button class="button icon-only small" type="button" data-action="edit-participant" data-id="${entry.id}" aria-label="编辑">${icons.edit}</button>
-                    <button class="button icon-only small danger" type="button" data-action="delete-participant" data-id="${entry.id}" aria-label="删除">${icons.trash}</button>
+                    ${admin ? `
+                      <button class="button icon-only small" type="button" data-action="edit-participant" data-id="${entry.id}" aria-label="编辑">${icons.edit}</button>
+                      <button class="button icon-only small danger" type="button" data-action="delete-participant" data-id="${entry.id}" aria-label="删除">${icons.trash}</button>
+                    ` : ""}
                   </div>
                 </div>
               </article>
@@ -4109,7 +5059,7 @@ button.management-row:hover {
             <div class="empty-mark" style="margin-left:auto;margin-right:auto">${icons.users}</div>
             <strong style="color:var(--ink)">没有匹配的参赛人员</strong>
             <p>调整筛选条件，或新增一条报名信息。</p>
-            <button class="button dark small" type="button" data-action="open-participant">${icons.plus} 新增人员</button>
+            ${admin ? `<button class="button dark small" type="button" data-action="open-participant">${icons.plus} 新增人员</button>` : ""}
           </div>
         `}
       </div>
@@ -4117,6 +5067,7 @@ button.management-row:hover {
   }
 
   function renderGroupCard(draw, group) {
+    const admin = isAdmin();
     const standings = groupStandings(draw, group);
     const matches = getGroupMatches(draw, group);
     return `
@@ -4138,14 +5089,18 @@ button.management-row:hover {
         <div class="group-divider"></div>
         <div class="group-matches">
           ${matches.length ? matches.map((match) => `
-            <button class="group-match-row" type="button" data-action="open-score" data-id="${match.id}">
+            <div class="group-match-row">
               <span class="match-names">
                 <b>${esc(matchTeamName(match, "a"))}</b>
                 <i>${match.winnerId ? `${match.scoreA} : ${match.scoreB}` : "VS"}</i>
                 <b>${esc(matchTeamName(match, "b"))}</b>
               </span>
-              <span class="status-pill ${match.winnerId ? "gray" : ""}">${match.winnerId ? "已完赛" : "录比分"}</span>
-            </button>
+              ${admin
+                ? `<button class="button small score-row-button ${match.winnerId ? "" : "primary"}" type="button" data-action="open-score" data-id="${match.id}">
+                    ${match.winnerId ? "修改比分" : "录入分数"}
+                  </button>`
+                : `<span class="status-pill ${match.winnerId ? "gray" : ""}">${match.winnerId ? "已完赛" : "等待比分"}</span>`}
+            </div>
           `).join("") : '<div class="group-empty">本轮轮空</div>'}
         </div>
       </article>
@@ -4153,13 +5108,15 @@ button.management-row:hover {
   }
 
   function bracketMatchCard(match) {
+    const admin = isAdmin();
+    const playable = Boolean(match.teamAId && match.teamBId && !match.isBye);
     const winnerA = match.winnerId && match.winnerId === match.teamAId;
     const winnerB = match.winnerId && match.winnerId === match.teamBId;
     const scheduleText = match.schedule
       ? `${match.schedule.time} · ${courtFor(match.schedule.courtId)?.name || ""}`
       : "未排时段";
     return `
-      <button class="match-card" type="button" data-action="open-score" data-id="${match.id}" style="width:100%;text-align:left;cursor:pointer">
+      <button class="match-card" type="button" ${admin && playable ? `data-action="open-score" data-id="${match.id}"` : `disabled`} style="width:100%;text-align:left;cursor:${admin && playable ? "pointer" : "default"}">
         <div class="match-slot ${winnerA ? "winner" : ""}">
           <span>${esc(matchTeamName(match, "a"))}</span><em>${match.scoreA ?? "—"}</em>
         </div>
@@ -4190,7 +5147,7 @@ button.management-row:hover {
             <h2>淘汰赛对阵</h2>
             <p>八强按 A1–B2、B1–C2、C1–D2、D1–A2 交叉；半决赛随机配对。</p>
           </div>
-          <span class="status-pill">点击场次录入比分</span>
+          <span class="status-pill">${isAdmin() ? "点击场次录入比分" : "实时比分"}</span>
         </div>
         <div class="bracket-scroll">
           <div class="bracket">
@@ -4225,6 +5182,66 @@ button.management-row:hover {
     `;
   }
 
+  function renderSingleKnockout(draw) {
+    const normalMatches = draw.matches
+      .filter((match) => match.stage !== "third")
+      .sort((left, right) => (left.roundIndex || 0) - (right.roundIndex || 0));
+    const rounds = [];
+    normalMatches.forEach((match) => {
+      if (!rounds[match.roundIndex]) rounds[match.roundIndex] = [];
+      rounds[match.roundIndex].push(match);
+    });
+    const medalMatches = [
+      ...draw.matches.filter((match) => match.stage === "third"),
+      ...draw.matches.filter((match) => match.stage === "final"),
+    ];
+    const final = draw.matches.find((match) => match.stage === "final");
+    const champion = final?.winnerId ? getTeam(draw, final.winnerId) : null;
+    const preMedalRounds = rounds.slice(0, -1);
+    return `
+      <section class="bracket-card">
+        <div class="bracket-topbar">
+          <div>
+            <h2>全程淘汰赛对阵</h2>
+            <p>随机配对直接淘汰；有轮空时自动进入下一轮，种子选手会优先分散到不同半区。</p>
+          </div>
+          <span class="status-pill">${isAdmin() ? "点击有效场次录入比分" : "实时比分"}</span>
+        </div>
+        <div class="bracket-scroll">
+          <div class="bracket">
+            ${preMedalRounds.map((roundMatches, roundIndex) => `
+              <div class="bracket-round">
+                <div class="bracket-round-title">${esc(STAGE_LABELS[roundMatches[0]?.stage] || `第 ${roundIndex + 1} 轮`)}</div>
+                <div class="round-matches">${roundMatches.map(bracketMatchCard).join("")}</div>
+              </div>
+            `).join("")}
+            <div class="bracket-round">
+              <div class="bracket-round-title">奖牌赛</div>
+              <div class="round-matches">${medalMatches.map(bracketMatchCard).join("")}</div>
+            </div>
+            <div class="final-column">
+              <div class="bracket-round-title">冠军</div>
+              <div class="champion-card">
+                <div class="cup">🏆</div>
+                <small>FIRST PLACE</small>
+                <strong>${esc(champion?.name || "等待决赛")}</strong>
+                ${champion ? `<span style="display:block;margin-top:4px;color:#8c7b51;font-size:9px">${esc(champion.department)}</span>` : ""}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    `;
+  }
+
+  function nextKnockoutMatch(draw) {
+    return draw.matches
+      .filter((match) => match.stage !== "third" && !match.isBye && match.teamAId && match.teamBId && !match.winnerId)
+      .sort((left, right) => (left.roundIndex || 0) - (right.roundIndex || 0))[0] ||
+      draw.matches.find((match) => match.stage === "third" && match.teamAId && match.teamBId && !match.winnerId) ||
+      null;
+  }
+
   function renderProgressionAction(draw, code) {
     if (canGenerateQuarter(draw)) {
       return `<button class="button primary small" type="button" data-action="generate-quarter" data-event="${code}">${icons.arrow} 生成八强对阵</button>`;
@@ -4244,19 +5261,27 @@ button.management-row:hover {
   }
 
   function renderDraw() {
+    const admin = isAdmin();
     const code = ui.drawEvent;
     const draw = getDraw(code);
     const stale = draw && isDrawStale(draw, code);
     const list = entriesFor(code);
+    const isKnockout = draw?.mode === "knockout" || (Boolean(draw) && code !== "xd" && !draw.groups);
+    const groupMatches = draw ? draw.matches.filter((match) => match.stage === "group") : [];
+    const groupDone = groupMatches.filter((match) => match.winnerId).length;
+    const nextGroupMatch = groupMatches.find((match) => !match.winnerId);
+    const nextSingleMatch = draw && isKnockout ? nextKnockoutMatch(draw) : null;
+    const knockoutExpected = draw && isKnockout ? Math.max(draw.teams.length - 1, 0) + (draw.teams.length >= 4 ? 1 : 0) : 0;
+    const knockoutDone = draw && isKnockout ? draw.matches.filter((match) => match.winnerId && !match.isBye).length : 0;
     return `
       <div class="page-heading">
         <div>
           <h1>抽签编排</h1>
-          <p>ABCD 四组、每组前两名晋级；八强交叉，半决赛重新随机配对。</p>
+          <p>${code === "xd" ? "混双先按 A/B 池配对，再进入 ABCD 四组、每组前两名晋级。" : "男单、女单采用全程淘汰制；随机对阵，种子优先分散，胜者直接进入下一轮。"}</p>
         </div>
         <div class="heading-actions">
           <button class="button" type="button" data-nav="participants">${icons.users} 查看名单</button>
-          <button class="button dark" type="button" data-action="draw-all">${icons.wand} 一键抽签</button>
+          ${admin ? `<button class="button dark" type="button" data-action="draw-all">${icons.wand} 一键抽签</button>` : `<span class="status-pill">只读赛程</span>`}
         </div>
       </div>
       <div class="draw-layout">
@@ -4265,9 +5290,10 @@ button.management-row:hover {
           <div class="event-selector">
             ${Object.keys(EVENT_META).map((event) => {
               const eventDraw = getDraw(event);
+              const unit = event === "xd" ? "支组合" : "名选手";
               return `
                 <button class="event-select-item ${code === event ? "active" : ""}" type="button" data-action="select-draw" data-event="${event}">
-                  <span><strong>${eventName(event)}</strong><span>${eventDraw ? `${eventDraw.teams.length} 支组合` : "尚未抽签"}</span></span>
+                  <span><strong>${eventName(event)}</strong><span>${eventDraw ? `${eventDraw.teams.length} ${unit}` : "尚未抽签"}</span></span>
                   <b>${eventDraw ? "✓" : entriesFor(event).length}</b>
                 </button>
               `;
@@ -4275,7 +5301,7 @@ button.management-row:hover {
           </div>
           <div class="draw-note">
             <strong style="display:block;margin-bottom:4px;color:var(--green-800)">本次赛制</strong>
-            21分制，一局定胜负，11分交换场地。混双先按 A/B 池配对，再统一随机分组。${code === "xd" ? "混双按男女混双实行让分制。" : ""}
+            21分制，一局定胜负，11分交换场地。${code === "xd" ? "混双先按 A/B 池配对，再统一随机分组，并按男女组合实行让分制。" : "单打全程淘汰，不进行小组循环赛。"}
           </div>
         </aside>
 
@@ -4285,8 +5311,10 @@ button.management-row:hover {
               <div class="empty">
                 <div class="empty-mark">${icons.shuffle}</div>
                 <strong>${eventName(code)}还没有抽签</strong>
-                <p>当前有 ${list.length} 条报名记录。${code === "xd" ? `其中 A 池 ${list.filter((entry) => entry.pool === "A").length} 人，B 池 ${list.filter((entry) => entry.pool === "B").length} 人。` : ""}系统会随机生成 ABCD 四组并创建小组循环赛。</p>
-                <button class="button dark" type="button" data-action="create-draw" data-event="${code}">${icons.shuffle} 开始随机抽签</button>
+                <p>当前有 ${list.length} 条报名记录。${code === "xd" ? `其中 A 池 ${list.filter((entry) => entry.pool === "A").length} 人，B 池 ${list.filter((entry) => entry.pool === "B").length} 人；系统会先配对，再生成 ABCD 四组。` : "系统会生成直接淘汰的对阵树，胜者自动进入下一轮。"}</p>
+                ${admin
+                  ? `<button class="button dark" type="button" data-action="create-draw" data-event="${code}">${icons.shuffle} 开始随机抽签</button>`
+                  : `<span class="status-pill">等待管理员完成抽签</span>`}
               </div>
             </section>
           ` : `
@@ -4295,33 +5323,54 @@ button.management-row:hover {
             ` : ""}
             <section class="draw-summary">
               <div>
-                <span class="eyebrow" style="margin-bottom:7px">${esc(formatDate(state.config.date))} · ${draw.teams.length} 支组合</span>
-                <h2>${eventName(code)} · 分组赛</h2>
-                <p>${draw.pairing ? `A 池 ${draw.pairing.aCount} 人 × B 池 ${draw.pairing.bCount} 人，成功配对 ${draw.pairing.pairCount} 组。` : `共 ${draw.teams.length} 名选手随机分配至 ABCD 四组。`}</p>
+                <span class="eyebrow" style="margin-bottom:7px">${esc(formatDate(state.config.date))} · ${draw.teams.length} ${isKnockout ? "名选手" : "支组合"}</span>
+                <h2>${eventName(code)} · ${isKnockout ? "全程淘汰" : "分组赛"}</h2>
+                <p>${draw.pairing ? `A 池 ${draw.pairing.aCount} 人 × B 池 ${draw.pairing.bCount} 人，成功配对 ${draw.pairing.pairCount} 组。` : `共 ${draw.teams.length} 名选手随机抽入淘汰赛对阵；标记种子后会优先分散。`}</p>
               </div>
               <div class="draw-actions">
-                <button class="button small" type="button" data-action="auto-schedule">${icons.wand} 自动排程</button>
-                <button class="button small" type="button" data-action="redraw" data-event="${code}">${icons.refresh} 重新抽签</button>
+                ${admin ? `
+                  <button class="button small" type="button" data-action="auto-schedule">${icons.wand} 自动排程</button>
+                  <button class="button small" type="button" data-action="redraw" data-event="${code}">${icons.refresh} 重新抽签</button>
+                ` : `<span class="status-pill">赛事账号 · 只读</span>`}
               </div>
             </section>
+
+            ${(isKnockout ? nextSingleMatch : nextGroupMatch) ? `
+              <section class="score-task">
+                <div class="score-task-icon">${icons.edit}</div>
+                <div class="score-task-copy">
+                  <span>下一步 · 录入${isKnockout ? "淘汰赛" : "小组赛"}比分</span>
+                  <strong>${esc(matchTeamName(isKnockout ? nextSingleMatch : nextGroupMatch, "a"))} <i>VS</i> ${esc(matchTeamName(isKnockout ? nextSingleMatch : nextGroupMatch, "b"))}</strong>
+                  <small>${matchCode(isKnockout ? nextSingleMatch : nextGroupMatch)} · 已完成 ${isKnockout ? knockoutDone : groupDone} / ${isKnockout ? knockoutExpected : groupMatches.length} 场</small>
+                </div>
+                ${admin
+                  ? `<button class="button dark" type="button" data-action="open-next-score" data-event="${code}">${icons.edit} 录入下一场分数</button>`
+                  : `<span class="status-pill">等待管理员录入</span>`}
+              </section>
+            ` : `
+              <div class="callout">${icons.check}<span>${isKnockout
+                ? (resultsFor(code) ? `${eventName(code)}已完赛，冠军：${esc(resultsFor(code).champion)}。` : `淘汰赛已完成 ${knockoutDone} / ${knockoutExpected} 场，后续对阵将随比分自动生成。`)
+                : `小组赛 ${groupDone} / ${groupMatches.length} 场已全部录入，${canGenerateQuarter(draw) && admin ? "可以生成八强对阵。" : "等待赛事后续推进。"}`
+              }</span></div>
+            `}
 
             ${draw.unpaired?.length ? `
               <div class="callout warn">${icons.info}<span>有 ${draw.unpaired.length} 名混双报名者因另一池人数不足未配对：${draw.unpaired.map((entry) => `${esc(entry.name)}（${entry.pool}池）`).join("、")}。</span></div>
             ` : ""}
 
-            <div class="group-grid">
-              ${GROUP_NAMES.map((group) => renderGroupCard(draw, group)).join("")}
-            </div>
-
-            <div class="progression-bar">
-              <div>
-                <strong>下一步</strong>
-                <span>${canGenerateQuarter(draw) ? "小组赛已全部完赛，可以生成交叉八强。" : getStageMatches(draw, "quarter").length ? "完成当前淘汰赛轮次后继续推进。" : "录入每场小组赛比分，系统按胜场、净胜分排出组内名次。"}</span>
+            ${isKnockout ? renderSingleKnockout(draw) : `
+              <div class="group-grid">
+                ${GROUP_NAMES.map((group) => renderGroupCard(draw, group)).join("")}
               </div>
-              ${renderProgressionAction(draw, code)}
-            </div>
-
-            ${getStageMatches(draw, "quarter").length ? renderKnockout(draw) : ""}
+              <div class="progression-bar">
+                <div>
+                  <strong>下一步</strong>
+                  <span>${canGenerateQuarter(draw) ? "小组赛已全部完赛，可以生成交叉八强。" : getStageMatches(draw, "quarter").length ? "完成当前淘汰赛轮次后继续推进。" : "录入每场小组赛比分，系统按胜场、净胜分排出组内名次。"}</span>
+                </div>
+                ${admin ? renderProgressionAction(draw, code) : `<span class="status-pill">只读查看</span>`}
+              </div>
+              ${getStageMatches(draw, "quarter").length ? renderKnockout(draw) : ""}
+            `}
           `}
         </div>
       </div>
@@ -4354,6 +5403,7 @@ button.management-row:hover {
   }
 
   function renderTimeline() {
+    const admin = isAdmin();
     const activeCourts = state.courts.filter((court) => court.active);
     const date = state.config.date;
     return `
@@ -4370,7 +5420,9 @@ button.management-row:hover {
               if (!match) {
                 return `
                   <div class="timeline-cell">
-                    <button class="slot-add" type="button" data-action="open-schedule" data-time="${time}" data-court="${court.id}">+ 安排比赛</button>
+                    ${admin
+                      ? `<button class="slot-add" type="button" data-action="open-schedule" data-time="${time}" data-court="${court.id}">+ 安排比赛</button>`
+                      : `<span class="slot-readonly">空档</span>`}
                   </div>
                 `;
               }
@@ -4393,6 +5445,7 @@ button.management-row:hover {
   }
 
   function renderDispatch() {
+    const admin = isAdmin();
     const stats = scheduleStats();
     const pending = unfinishedMatches().filter((match) => match.teamAId && match.teamBId && !match.schedule);
     const activeStaff = state.staff.filter((person) => person.active);
@@ -4402,11 +5455,13 @@ button.management-row:hover {
       <div class="page-heading">
         <div>
           <h1>场地调度</h1>
-          <p>${esc(state.config.venue)} · 自动避开场地、工作人员和选手的时段冲突。</p>
+          <p>${admin ? `${esc(state.config.venue)} · 自动避开场地、工作人员和选手的时段冲突。` : `${esc(state.config.venue)} · 查看当日场地、时段与比分安排。`}</p>
         </div>
         <div class="heading-actions">
-          <button class="button" type="button" data-action="open-staff">${icons.plus} 工作人员</button>
-          <button class="button dark" type="button" data-action="auto-schedule">${icons.wand} 一键排程</button>
+          ${admin ? `
+            <button class="button" type="button" data-action="open-staff">${icons.plus} 工作人员</button>
+            <button class="button dark" type="button" data-action="auto-schedule">${icons.wand} 一键排程</button>
+          ` : `<span class="status-pill">只读赛程</span>`}
         </div>
       </div>
 
@@ -4440,18 +5495,18 @@ button.management-row:hover {
           <section class="card">
             <div class="card-header">
               <div class="card-title"><h3>待安排</h3><p>${pending.length} 场尚未入表</p></div>
-              <button class="text-button" type="button" data-action="auto-schedule">自动安排</button>
+              ${admin ? `<button class="text-button" type="button" data-action="auto-schedule">自动安排</button>` : ""}
             </div>
             ${pending.length ? `
               <div class="unscheduled-list">
                 ${pending.slice(0, 5).map((match) => `
-                  <button class="staff-item" type="button" data-action="open-schedule" data-id="${match.id}" style="width:100%;text-align:left;cursor:pointer">
+                  <button class="staff-item" type="button" ${admin ? `data-action="open-schedule" data-id="${match.id}"` : `disabled`} style="width:100%;text-align:left;cursor:${admin ? "pointer" : "default"}">
                     <span class="court-num">${EVENT_META[match.event]?.mark || "?"}</span>
                     <span class="staff-info">
                       <strong>${esc(matchTeamName(match, "a"))} vs ${esc(matchTeamName(match, "b"))}</strong>
                       <span>${esc(matchCode(match))}</span>
                     </span>
-                    <span class="status-pill">安排</span>
+                    <span class="status-pill">${admin ? "安排" : "待安排"}</span>
                   </button>
                 `).join("")}
                 ${pending.length > 5 ? `<button class="list-more" type="button" data-action="show-all-unscheduled">查看其余 ${pending.length - 5} 场</button>` : ""}
@@ -4462,11 +5517,11 @@ button.management-row:hover {
           <section class="card">
             <div class="card-header">
               <div class="card-title"><h3>工作人员</h3><p>${activeStaff.length} 人在岗</p></div>
-              <button class="text-button" type="button" data-action="open-staff">管理</button>
+              ${admin ? `<button class="text-button" type="button" data-action="open-staff">管理</button>` : ""}
             </div>
             <div class="staff-list">
               ${state.staff.slice(0, 4).map((person) => `
-                <button class="staff-item" type="button" data-action="edit-staff" data-id="${person.id}" style="width:100%;text-align:left;cursor:pointer">
+                <button class="staff-item" type="button" ${admin ? `data-action="edit-staff" data-id="${person.id}"` : `disabled`} style="width:100%;text-align:left;cursor:${admin ? "pointer" : "default"}">
                   <span class="avatar">${esc(initials(person.name))}</span>
                   <span class="staff-info"><strong>${esc(person.name)} · ${esc(person.role)}</strong><span>${esc(person.phone || "未留电话")}</span></span>
                   <span class="dot ${person.active ? "" : "off"}"></span>
@@ -4479,14 +5534,14 @@ button.management-row:hover {
           <section class="card">
             <div class="card-header">
               <div class="card-title"><h3>比赛场地</h3><p>${activeCourts.length} / ${state.courts.length} 启用</p></div>
-              <button class="text-button" type="button" data-action="open-court">管理</button>
+              ${admin ? `<button class="text-button" type="button" data-action="open-court">管理</button>` : ""}
             </div>
             <div class="court-list">
               ${state.courts.map((court) => `
                 <div class="court-item ${court.active ? "" : "inactive"}">
                   <span class="court-num">${esc(court.name.replace(/[^0-9]/g, "") || "场")}</span>
                   <span class="court-info"><strong>${esc(court.name)}</strong><span>${court.active ? "开放使用" : "暂停使用"}</span></span>
-                  <button class="button icon-only small" type="button" data-action="toggle-court" data-id="${court.id}" aria-label="${court.active ? "停用" : "启用"}场地">${court.active ? icons.check : icons.plus}</button>
+                  ${admin ? `<button class="button icon-only small" type="button" data-action="toggle-court" data-id="${court.id}" aria-label="${court.active ? "停用" : "启用"}场地">${court.active ? icons.check : icons.plus}</button>` : `<span class="dot ${court.active ? "" : "off"}"></span>`}
                 </div>
               `).join("")}
             </div>
@@ -4500,6 +5555,59 @@ button.management-row:hover {
   }
 
   function renderSettings() {
+    const admin = isAdmin();
+    const account = currentAccount();
+    if (!admin) {
+      return `
+        <div class="page-heading">
+          <div>
+            <h1>我的账号</h1>
+            <p>当前账号可查看赛事名单、分组比分和场地调度。</p>
+          </div>
+          <span class="status-pill">查看账号</span>
+        </div>
+        <div class="settings-layout">
+          <div>
+            <section class="card">
+              <div class="card-header">
+                <div class="card-title"><h2>账号信息</h2><p>只读权限由赛事管理员配置</p></div>
+                <span class="status-pill">已登录</span>
+              </div>
+              <div class="profile-banner">
+                <span class="avatar">${esc(initials(account.displayName))}</span>
+                <div><strong>${esc(account.displayName)}</strong><span>@${esc(account.username)} · ${roleLabel(account.role)}</span></div>
+              </div>
+              <div class="setting-row">
+                <div class="setting-copy"><strong>查看权限</strong><span>可查看参赛名单、ABCD 分组、比分和当日场地安排。</span></div>
+                <span class="dot"></span>
+              </div>
+              <div class="setting-row">
+                <div class="setting-copy"><strong>编辑权限</strong><span>抽签、比分录入、工作人员和场地调整仅管理员可操作。</span></div>
+                <span class="dot off"></span>
+              </div>
+              <div class="setting-row">
+                <div class="setting-copy"><strong>登录密码</strong><span>可修改当前查看账号的密码。</span></div>
+                <button class="button small" type="button" data-action="change-password">修改密码</button>
+              </div>
+              <div class="setting-row">
+                <div class="setting-copy"><strong>跨设备查看</strong><span>向管理员获取最新“团队同步链接”。</span></div>
+                <span class="status-pill">只读</span>
+              </div>
+            </section>
+          </div>
+          <div>
+            <section class="card">
+              <div class="card-header"><div class="card-title"><h3>赛事信息</h3></div></div>
+              <div class="setting-row"><div class="setting-copy"><strong>${esc(state.config.name)}</strong><span>${esc(formatDate(state.config.date, true))} · ${esc(state.config.venue)}</span></div></div>
+              <div class="setting-row"><div class="setting-copy"><strong>当前赛制</strong><span>${esc(state.config.rules)}</span></div></div>
+            </section>
+            <section class="card" style="margin-top:14px">
+              <button class="button danger" type="button" data-action="logout" style="width:100%">退出当前账号</button>
+            </section>
+          </div>
+        </div>
+      `;
+    }
     const storageSize = new Blob([JSON.stringify(state)]).size;
     const results = Object.keys(EVENT_META).map((code) => ({
       code,
@@ -4543,7 +5651,7 @@ button.management-row:hover {
 
           <section class="card settings-card">
             <div class="card-header">
-              <div class="card-title"><h2>竞赛项目</h2><p>依据赛程文件配置，抽签规则固定为 ABCD 小组赛</p></div>
+              <div class="card-title"><h2>竞赛项目</h2><p>单打全程淘汰；混双采用 ABCD 小组赛</p></div>
             </div>
             ${Object.keys(EVENT_META).map((code) => {
               const draw = getDraw(code);
@@ -4565,6 +5673,10 @@ button.management-row:hover {
             </div>
             <div class="callout">${icons.info}<span>${esc(state.config.rules)}</span></div>
             <div class="setting-row">
+              <div class="setting-copy"><strong>单打赛制</strong><span>男单、女单全程淘汰，随机配对后胜者直接进入下一轮。</span></div>
+              <span class="status-pill">全程淘汰</span>
+            </div>
+            <div class="setting-row">
               <div class="setting-copy"><strong>混双搭配</strong><span>A 池与 B 池随机抽签配对，再统一进入 ABCD 小组。</span></div>
               <span class="status-pill">已启用</span>
             </div>
@@ -4574,7 +5686,11 @@ button.management-row:hover {
             </div>
             <div class="setting-row">
               <div class="setting-copy"><strong>晋级与淘汰</strong><span>每组前两名晋级八强；A1–B2、B1–C2、C1–D2、D1–A2，半决赛两两随机抽签。</span></div>
-              <span class="status-pill">四组制</span>
+              <span class="status-pill">混双四组制</span>
+            </div>
+            <div class="setting-row">
+              <div class="setting-copy"><strong>种子选手</strong><span>种子不会跳过抽签，只会优先分散到不同淘汰赛分区；其他人员仍随机排位。</span></div>
+              <span class="status-pill">分散分区</span>
             </div>
           </section>
 
@@ -4600,7 +5716,11 @@ button.management-row:hover {
         <div>
           <section class="card">
             <div class="card-header">
-              <div class="card-title"><h3>数据管理</h3><p>本地共 ${(storageSize / 1024).toFixed(1)} KB</p></div>
+              <div class="card-title"><h3>数据管理</h3><p>本机数据 ${(storageSize / 1024).toFixed(1)} KB</p></div>
+            </div>
+            <div class="setting-row">
+              <div class="setting-copy"><strong>生成团队同步链接</strong><span>把最新名单和赛程打包成链接，其他设备打开即可查看。</span></div>
+              <button class="button small" type="button" data-action="copy-sync-link">生成</button>
             </div>
             <div class="setting-row">
               <div class="setting-copy"><strong>导出完整备份</strong><span>包含名单、抽签、比分与排程</span></div>
@@ -4617,6 +5737,29 @@ button.management-row:hover {
             <div class="setting-row">
               <div class="setting-copy"><strong>恢复示例数据</strong><span>重置为 16 名示例选手及默认场地</span></div>
               <button class="button small" type="button" data-action="reset-demo">恢复</button>
+            </div>
+          </section>
+
+          <section class="card" style="margin-top:14px">
+            <div class="card-header">
+              <div class="card-title"><h3>账号与权限</h3><p>${state.accounts.length} 个账号 · 仅管理员可编辑赛事</p></div>
+              <button class="text-button" type="button" data-action="manage-accounts">管理</button>
+            </div>
+            <div class="profile-banner">
+              <span class="avatar">${esc(initials(currentAccount().displayName))}</span>
+              <div><strong>${esc(currentAccount().displayName)}</strong><span>@${esc(currentAccount().username)} · 管理员</span></div>
+            </div>
+            <div class="setting-row">
+              <div class="setting-copy"><strong>当前登录</strong><span>${esc(currentAccount().displayName)}</span></div>
+              <span class="status-pill">管理员</span>
+            </div>
+            <div class="setting-row">
+              <div class="setting-copy"><strong>账号管理</strong><span>创建查看账号、修改密码或停用账号</span></div>
+              <button class="button small" type="button" data-action="manage-accounts">打开</button>
+            </div>
+            <div class="setting-row">
+              <div class="setting-copy"><strong>修改我的密码</strong><span>首次上线后建议立即修改默认密码</span></div>
+              <button class="button small" type="button" data-action="change-password">修改</button>
             </div>
           </section>
 
@@ -4719,7 +5862,7 @@ button.management-row:hover {
             </div>
             <label class="check-chip" style="grid-column:1/-1">
               <input type="checkbox" name="seed" ${entry?.seed ? "checked" : ""} />
-              <span>标记为种子组合（不会跳过随机抽签）</span>
+              <span>标记为种子：抽签时优先分散，避免首轮提前相遇</span>
             </label>
           </div>
         </form>
@@ -4851,9 +5994,11 @@ button.management-row:hover {
         ${match.winnerId ? `<div class="callout" style="margin:15px 0 0">${icons.check}<span>胜者：${esc(matchTeamName(match, match.winnerId === match.teamAId ? "a" : "b"))}</span></div>` : ""}
       `,
       footer: `
-        ${match.schedule ? `<button class="button danger" type="button" data-action="unschedule" data-id="${match.id}">取消排程</button>` : ""}
-        <button class="button" type="button" data-action="open-schedule" data-id="${match.id}">${icons.clock} ${match.schedule ? "调整排程" : "安排时段"}</button>
-        <button class="button dark" type="button" data-action="open-score" data-id="${match.id}">${icons.edit} 录比分</button>
+        ${isAdmin() ? `
+          ${match.schedule ? `<button class="button danger" type="button" data-action="unschedule" data-id="${match.id}">取消排程</button>` : ""}
+          <button class="button" type="button" data-action="open-schedule" data-id="${match.id}">${icons.clock} ${match.schedule ? "调整排程" : "安排时段"}</button>
+          <button class="button dark" type="button" data-action="open-score" data-id="${match.id}">${icons.edit} 录比分</button>
+        ` : `<button class="button dark" type="button" data-action="close-modal">关闭</button>`}
       `,
     });
   }
@@ -4921,21 +6066,26 @@ button.management-row:hover {
   }
 
   function staffListModal() {
+    const admin = isAdmin();
     return modalShell({
       title: "工作人员管理",
-      subtitle: `${state.staff.filter((person) => person.active).length} 人当前可参与调度。`,
+      subtitle: admin
+        ? `${state.staff.filter((person) => person.active).length} 人当前可参与调度。`
+        : "当前为只读权限，可查看工作人员及分工。",
       wide: true,
       body: `
-        <form id="staff-add-form" data-form="staff-add">
-          <div class="form-grid">
-            <div class="field"><label>姓名</label><input name="name" required placeholder="工作人员姓名" /></div>
-            <div class="field"><label>岗位</label>
-              <select name="role"><option>裁判员</option><option>裁判长</option><option>记录员</option><option>场地协调</option><option>检录员</option></select>
+        ${admin ? `
+          <form id="staff-add-form" data-form="staff-add">
+            <div class="form-grid">
+              <div class="field"><label>姓名</label><input name="name" required placeholder="工作人员姓名" /></div>
+              <div class="field"><label>岗位</label>
+                <select name="role"><option>裁判员</option><option>裁判长</option><option>记录员</option><option>场地协调</option><option>检录员</option></select>
+              </div>
+              <div class="field"><label>电话</label><input name="phone" placeholder="选填" /></div>
+              <div class="field" style="display:flex;align-items:flex-end"><button class="button dark" type="submit" style="width:100%">${icons.plus} 添加工作人员</button></div>
             </div>
-            <div class="field"><label>电话</label><input name="phone" placeholder="选填" /></div>
-            <div class="field" style="display:flex;align-items:flex-end"><button class="button dark" type="submit" style="width:100%">${icons.plus} 添加工作人员</button></div>
-          </div>
-        </form>
+          </form>
+        ` : ""}
         <div class="management-list">
           ${state.staff.map((person) => `
             <div class="management-row">
@@ -4943,13 +6093,15 @@ button.management-row:hover {
                 <span class="avatar">${esc(initials(person.name))}</span>
                 <span class="person-copy"><strong>${esc(person.name)} · ${esc(person.role)}</strong><span>${esc(person.phone || "未留电话")}</span></span>
               </div>
-              <div style="display:flex;align-items:center;gap:7px">
-                <label class="switch" title="${person.active ? "在岗" : "停用"}">
-                  <input type="checkbox" data-action="toggle-staff" data-id="${person.id}" ${person.active ? "checked" : ""} />
-                  <span></span>
-                </label>
-                <button class="button icon-only small danger" type="button" data-action="delete-staff" data-id="${person.id}" aria-label="删除">${icons.trash}</button>
-              </div>
+              ${admin ? `
+                <div style="display:flex;align-items:center;gap:7px">
+                  <label class="switch" title="${person.active ? "在岗" : "停用"}">
+                    <input type="checkbox" data-action="toggle-staff" data-id="${person.id}" ${person.active ? "checked" : ""} />
+                    <span></span>
+                  </label>
+                  <button class="button icon-only small danger" type="button" data-action="delete-staff" data-id="${person.id}" aria-label="删除">${icons.trash}</button>
+                </div>
+              ` : `<span class="status-pill ${person.active ? "" : "gray"}">${person.active ? "在岗" : "停用"}</span>`}
             </div>
           `).join("")}
         </div>
@@ -4959,16 +6111,19 @@ button.management-row:hover {
   }
 
   function courtListModal() {
+    const admin = isAdmin();
     return modalShell({
       title: "场地管理",
-      subtitle: "停用的场地不会参与自动排程。",
+      subtitle: admin ? "停用的场地不会参与自动排程。" : "当前为只读权限，可查看场地启用状态。",
       body: `
-        <form id="court-add-form" data-form="court-add">
-          <div class="form-grid" style="grid-template-columns:minmax(0,1fr) auto">
-            <div class="field"><label>场地名称</label><input name="name" required maxlength="20" placeholder="例如：5号场" /></div>
-            <div class="field" style="display:flex;align-items:flex-end"><button class="button dark" type="submit">${icons.plus} 添加</button></div>
-          </div>
-        </form>
+        ${admin ? `
+          <form id="court-add-form" data-form="court-add">
+            <div class="form-grid" style="grid-template-columns:minmax(0,1fr) auto">
+              <div class="field"><label>场地名称</label><input name="name" required maxlength="20" placeholder="例如：5号场" /></div>
+              <div class="field" style="display:flex;align-items:flex-end"><button class="button dark" type="submit">${icons.plus} 添加</button></div>
+            </div>
+          </form>
+        ` : ""}
         <div class="management-list">
           ${state.courts.map((court) => `
             <div class="management-row">
@@ -4976,13 +6131,15 @@ button.management-row:hover {
                 <span class="court-num">${esc(court.name.replace(/[^0-9]/g, "") || "场")}</span>
                 <span class="person-copy"><strong>${esc(court.name)}</strong><span>${court.active ? "开放使用" : "已暂停使用"}</span></span>
               </div>
-              <div style="display:flex;align-items:center;gap:7px">
-                <label class="switch" title="${court.active ? "停用" : "启用"}">
-                  <input type="checkbox" data-action="toggle-court" data-id="${court.id}" ${court.active ? "checked" : ""} />
-                  <span></span>
-                </label>
-                <button class="button icon-only small danger" type="button" data-action="delete-court" data-id="${court.id}" aria-label="删除">${icons.trash}</button>
-              </div>
+              ${admin ? `
+                <div style="display:flex;align-items:center;gap:7px">
+                  <label class="switch" title="${court.active ? "停用" : "启用"}">
+                    <input type="checkbox" data-action="toggle-court" data-id="${court.id}" ${court.active ? "checked" : ""} />
+                    <span></span>
+                  </label>
+                  <button class="button icon-only small danger" type="button" data-action="delete-court" data-id="${court.id}" aria-label="删除">${icons.trash}</button>
+                </div>
+              ` : `<span class="status-pill ${court.active ? "" : "gray"}">${court.active ? "启用" : "停用"}</span>`}
             </div>
           `).join("")}
         </div>
@@ -5011,6 +6168,104 @@ button.management-row:hover {
         </div>
       `,
       footer: `<button class="button dark" type="button" data-action="close-modal">关闭</button>`,
+    });
+  }
+
+  function accountsModal() {
+    const me = currentAccount();
+    return modalShell({
+      title: "账号与权限",
+      subtitle: "管理员负责全部编辑操作；查看账号登录后可浏览赛事。",
+      wide: true,
+      body: `
+        <div class="account-toolbar">
+          <span>${state.accounts.length} 个账号，其中 ${state.accounts.filter((account) => account.role === "admin").length} 个管理员</span>
+          <button class="button dark small" type="button" data-action="create-account">${icons.plus} 新增账号</button>
+        </div>
+        <div class="account-list">
+          ${state.accounts.map((account) => `
+            <div class="account-row">
+              <div class="person">
+                <span class="avatar">${esc(initials(account.displayName))}</span>
+                <span class="person-copy">
+                  <strong>${esc(account.displayName)} ${account.id === me.id ? '<span class="seed-mark">当前</span>' : ""}</strong>
+                  <span>@${esc(account.username)} · ${roleLabel(account.role)} · ${account.active === false ? "已停用" : "正常"}</span>
+                </span>
+              </div>
+              <div class="table-actions">
+                <button class="button small" type="button" data-action="edit-account" data-id="${account.id}">${icons.edit} 编辑</button>
+                ${account.id !== me.id ? `<button class="button danger small" type="button" data-action="delete-account" data-id="${account.id}">删除</button>` : ""}
+              </div>
+            </div>
+          `).join("")}
+        </div>
+        <div class="callout" style="margin-top:15px">${icons.info}<span>管理员可修改名单、抽签、比分、场地和工作人员；查看账号只能浏览。账号随赛事数据同步到云端。</span></div>
+      `,
+      footer: `<button class="button dark" type="button" data-action="close-modal">完成</button>`,
+    });
+  }
+
+  function accountEditorModal(payload = {}) {
+    const account = payload.id ? state.accounts.find((item) => item.id === payload.id) : null;
+    return modalShell({
+      title: account ? "编辑账号" : "新增账号",
+      subtitle: account ? `@${account.username}` : "创建后可直接使用账号密码登录。",
+      body: `
+        <form id="account-form" data-form="account">
+          <input type="hidden" name="id" value="${esc(account?.id || "")}" />
+          <div class="form-grid">
+            <div class="field">
+              <label>登录账号 <em>*</em></label>
+              <input name="username" required minlength="3" maxlength="24" pattern="[A-Za-z0-9_]+" value="${esc(account?.username || "")}" placeholder="字母、数字或下划线" />
+            </div>
+            <div class="field">
+              <label>显示名称 <em>*</em></label>
+              <input name="displayName" required maxlength="24" value="${esc(account?.displayName || "")}" placeholder="例如：裁判组小李" />
+            </div>
+            <div class="field">
+              <label>账号权限 <em>*</em></label>
+              <select name="role">
+                <option value="viewer" ${account?.role !== "admin" ? "selected" : ""}>查看账号</option>
+                <option value="admin" ${account?.role === "admin" ? "selected" : ""}>管理员</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>${account ? "新密码（留空则不修改）" : "登录密码 *"}</label>
+              <input name="password" type="password" minlength="6" maxlength="40" ${account ? "" : "required"} placeholder="至少 6 位" />
+            </div>
+            ${account ? `
+              <label class="check-chip" style="grid-column:1/-1">
+                <input type="checkbox" name="active" ${account.active !== false ? "checked" : ""} />
+                <span>允许该账号登录</span>
+              </label>
+            ` : ""}
+          </div>
+        </form>
+      `,
+      footer: `
+        <button class="button" type="button" data-action="manage-accounts">返回</button>
+        <button class="button dark" type="submit" form="account-form">${account ? "保存账号" : "创建账号"}</button>
+      `,
+    });
+  }
+
+  function changePasswordModal() {
+    return modalShell({
+      title: "修改登录密码",
+      subtitle: `当前账号 @${currentAccount().username}`,
+      body: `
+        <form id="password-form" data-form="password">
+          <div class="form-grid">
+            <div class="field full"><label>当前密码</label><input name="currentPassword" type="password" required autocomplete="current-password" /></div>
+            <div class="field full"><label>新密码</label><input name="newPassword" type="password" required minlength="6" autocomplete="new-password" placeholder="至少 6 位" /></div>
+            <div class="field full"><label>确认新密码</label><input name="confirmPassword" type="password" required minlength="6" autocomplete="new-password" /></div>
+          </div>
+        </form>
+      `,
+      footer: `
+        <button class="button" type="button" data-action="close-modal">取消</button>
+        <button class="button dark" type="submit" form="password-form">确认修改</button>
+      `,
     });
   }
 
@@ -5050,6 +6305,9 @@ button.management-row:hover {
     else if (type === "staff") content = staffListModal();
     else if (type === "court") content = courtListModal();
     else if (type === "unscheduled") content = unscheduledModal();
+    else if (type === "accounts") content = accountsModal();
+    else if (type === "account-editor") content = accountEditorModal(payload);
+    else if (type === "password") content = changePasswordModal();
     else if (type === "confirm") content = confirmModal(payload);
     else content = modalShell({ title: "提示", body: "<p>未知操作</p>" });
     root.innerHTML = content;
@@ -5192,6 +6450,10 @@ button.management-row:hover {
     );
   }
 
+  function requireAdminPermission() {
+    if (!isAdmin()) throw new Error("当前为查看账号，只有管理员可以修改赛事");
+  }
+
   function saveParticipant(form) {
     const data = new FormData(form);
     const id = String(data.get("id") || "");
@@ -5309,13 +6571,105 @@ button.management-row:hover {
     toast("赛事信息已保存");
   }
 
-  function handleFormSubmit(event) {
+  async function submitLogin(form) {
+    const data = new FormData(form);
+    const username = String(data.get("username") || "").trim().toLowerCase();
+    const password = String(data.get("password") || "");
+    const account = state.accounts.find((item) =>
+      item.username.toLowerCase() === username && item.active !== false
+    );
+    if (!account || account.passwordHash !== await hashPassword(password)) {
+      ui.loginError = "账号或密码不正确";
+      renderApp();
+      window.setTimeout(() => document.getElementById("login-password")?.focus(), 30);
+      return;
+    }
+    sessionStorage.setItem(SESSION_KEY, account.id);
+    ui.loginError = "";
+    ui.view = "overview";
+    window.location.hash = "overview";
+    renderApp();
+    toast(`欢迎，${account.displayName}`);
+  }
+
+  async function saveAccount(form) {
+    requireAdminPermission();
+    const data = new FormData(form);
+    const id = String(data.get("id") || "");
+    const username = String(data.get("username") || "").trim().toLowerCase();
+    const displayName = String(data.get("displayName") || "").trim();
+    const role = String(data.get("role") || "viewer");
+    const password = String(data.get("password") || "");
+    const active = id ? data.get("active") === "on" : true;
+    if (!/^[a-z0-9_]{3,24}$/i.test(username)) throw new Error("账号需为 3–24 位字母、数字或下划线");
+    if (!displayName) throw new Error("请填写显示名称");
+    if (!["admin", "viewer"].includes(role)) throw new Error("账号权限无效");
+    if (state.accounts.some((item) => item.id !== id && item.username.toLowerCase() === username)) {
+      throw new Error("该登录账号已存在");
+    }
+    const existing = state.accounts.find((item) => item.id === id);
+    if (existing?.id === currentAccount().id && (role !== "admin" || !active)) {
+      throw new Error("不能降低或停用当前登录的管理员账号");
+    }
+    if (existing && existing.role === "admin" && (role !== "admin" || !active)) {
+      const otherAdmins = state.accounts.filter((item) => item.id !== id && item.role === "admin" && item.active !== false);
+      if (!otherAdmins.length) throw new Error("至少需要保留一个可用管理员账号");
+    }
+    if (existing) {
+      Object.assign(existing, { username, displayName, role, active, defaultAccount: false });
+      if (password) {
+        if (password.length < 6) throw new Error("密码至少需要 6 位");
+        existing.passwordHash = await hashPassword(password);
+      }
+    } else {
+      if (password.length < 6) throw new Error("密码至少需要 6 位");
+      state.accounts.push({
+        id: makeId("account"),
+        username,
+        displayName,
+        role,
+        active: true,
+        passwordHash: await hashPassword(password),
+        defaultAccount: false,
+      });
+    }
+    saveState();
+    ui.modal = { type: "accounts", payload: {} };
+    renderApp();
+    toast(existing ? "账号已更新" : "账号已创建，可立即登录");
+  }
+
+  async function changeOwnPassword(form) {
+    const account = currentAccount();
+    const data = new FormData(form);
+    const currentPassword = String(data.get("currentPassword") || "");
+    const newPassword = String(data.get("newPassword") || "");
+    const confirmPassword = String(data.get("confirmPassword") || "");
+    if (account.passwordHash !== await hashPassword(currentPassword)) throw new Error("当前密码不正确");
+    if (newPassword.length < 6) throw new Error("新密码至少需要 6 位");
+    if (newPassword !== confirmPassword) throw new Error("两次输入的新密码不一致");
+    account.passwordHash = await hashPassword(newPassword);
+    account.defaultAccount = false;
+    saveState();
+    closeModal();
+    renderApp();
+    toast("登录密码已修改");
+  }
+
+  async function handleFormSubmit(event) {
     const form = event.target.closest("form[data-form]");
     if (!form) return;
     event.preventDefault();
     try {
       const type = form.dataset.form;
-      if (type === "participant") saveParticipant(form);
+      if (["participant", "batch", "config", "score", "schedule", "staff-add", "court-add"].includes(type)) {
+        requireAdminPermission();
+      }
+      if (type === "login") {
+        await submitLogin(form);
+      } else if (type === "participant") {
+        saveParticipant(form);
+      }
       else if (type === "batch") saveBatch(form);
       else if (type === "config") saveConfig(form);
       else if (type === "score") {
@@ -5363,6 +6717,10 @@ button.management-row:hover {
         saveState();
         renderModal();
         toast("比赛场地已添加");
+      } else if (type === "account") {
+        await saveAccount(form);
+      } else if (type === "password") {
+        await changeOwnPassword(form);
       }
     } catch (error) {
       toast(error.message || "保存失败", "error");
@@ -5406,6 +6764,7 @@ button.management-row:hover {
     }
     const action = event.target.dataset.action;
     if (action === "toggle-staff") {
+      requireAdminPermission();
       const person = staffFor(event.target.dataset.id);
       if (!person) return;
       person.active = event.target.checked;
@@ -5420,6 +6779,7 @@ button.management-row:hover {
       return;
     }
     if (action === "toggle-court") {
+      requireAdminPermission();
       const court = courtFor(event.target.dataset.id);
       if (!court) return;
       if (!event.target.checked) {
@@ -5497,6 +6857,23 @@ button.management-row:hover {
         closeModal();
         renderApp();
         toast("场地已删除");
+      } else if (action === "delete-account-confirm") {
+        requireAdminPermission();
+        const me = currentAccount();
+        const account = state.accounts.find((item) => item.id === id);
+        if (!account) throw new Error("账号不存在");
+        if (account.id === me.id) throw new Error("不能删除当前登录账号");
+        if (account.role === "admin") {
+          const otherAdmins = state.accounts.filter((item) =>
+            item.id !== id && item.role === "admin" && item.active !== false
+          );
+          if (!otherAdmins.length) throw new Error("至少需要保留一个可用管理员账号");
+        }
+        state.accounts = state.accounts.filter((item) => item.id !== id);
+        saveState();
+        ui.modal = { type: "accounts", payload: {} };
+        renderApp();
+        toast("账号已删除");
       }
     } catch (error) {
       closeModal();
@@ -5504,7 +6881,7 @@ button.management-row:hover {
     }
   }
 
-  function handleClick(event) {
+  async function handleClick(event) {
     const nav = event.target.closest("[data-nav]");
     if (nav) {
       event.preventDefault();
@@ -5524,7 +6901,35 @@ button.management-row:hover {
     const id = actionTarget.dataset.id || "";
     const targetEvent = actionTarget.dataset.event || "";
     try {
-      if (action === "close-modal") {
+      const adminOnlyActions = new Set([
+        "open-participant", "edit-participant", "delete-participant", "open-batch-import",
+        "export-csv", "create-draw", "draw-all", "redraw",
+        "auto-schedule", "generate-quarter", "generate-semi", "generate-medals",
+        "open-score", "open-next-score", "open-schedule", "unschedule",
+        "edit-staff", "delete-staff", "toggle-staff", "open-court",
+        "delete-court", "toggle-court", "edit-config", "export-backup",
+        "import-backup", "reset-demo", "clear-all", "manage-accounts",
+        "create-account", "edit-account", "delete-account",
+      ]);
+      if (adminOnlyActions.has(action)) requireAdminPermission();
+
+      if (action === "fill-login") {
+        const role = actionTarget.dataset.role;
+        const username = document.getElementById("login-username");
+        const password = document.getElementById("login-password");
+        if (username && password) {
+          username.value = role === "admin" ? "admin" : "staff";
+          password.value = role === "admin" ? "Admin@2026" : "Staff@2026";
+          password.focus();
+        }
+      } else if (action === "logout") {
+        sessionStorage.removeItem(SESSION_KEY);
+        ui.modal = null;
+        ui.view = "overview";
+        window.location.hash = "overview";
+        renderApp();
+        toast("已退出登录");
+      } else if (action === "close-modal") {
         closeModal();
       } else if (action === "open-participant") {
         openModal("participant");
@@ -5590,6 +6995,13 @@ button.management-row:hover {
         });
       } else if (action === "open-score") {
         openModal("score", { id });
+      } else if (action === "open-next-score") {
+        const draw = getDraw(targetEvent);
+        const nextMatch = draw?.mode === "knockout"
+          ? nextKnockoutMatch(draw)
+          : draw?.matches.find((match) => match.stage === "group" && !match.winnerId);
+        if (!nextMatch) throw new Error("当前项目已有全部小组比分，或尚未完成抽签");
+        openModal("score", { id: nextMatch.id });
       } else if (action === "match-detail") {
         openModal("match-detail", { id });
       } else if (action === "open-schedule") {
@@ -5677,6 +7089,28 @@ button.management-row:hover {
         copyText(window.location.href).then(() => toast("页面链接已复制")).catch(() => {
           toast("当前环境无法自动复制，请从地址栏复制", "error");
         });
+      } else if (action === "manage-accounts") {
+        openModal("accounts");
+      } else if (action === "create-account") {
+        openModal("account-editor");
+      } else if (action === "edit-account") {
+        openModal("account-editor", { id });
+      } else if (action === "change-password") {
+        openModal("password");
+      } else if (action === "copy-sync-link") {
+        await copySyncLink();
+      } else if (action === "delete-account") {
+        const account = state.accounts.find((item) => item.id === id);
+        if (!account) return;
+        openModal("confirm", {
+          title: "删除账号",
+          heading: `删除 ${account.displayName}？`,
+          body: "该账号将无法继续登录。管理员账号需要确保至少保留一个可用管理员。",
+          confirmAction: "delete-account-confirm",
+          confirmLabel: "删除账号",
+          danger: true,
+          id,
+        });
       } else if (action === "reset-demo") {
         openModal("confirm", {
           title: "恢复示例数据",
@@ -5703,7 +7137,7 @@ button.management-row:hover {
     }
   }
 
-  function init() {
+  async function init() {
     document.addEventListener("click", handleClick);
     document.addEventListener("submit", handleFormSubmit);
     document.addEventListener("input", handleInput);
@@ -5718,13 +7152,21 @@ button.management-row:hover {
         renderApp();
       }
     });
+    try {
+      if (await consumeSharedState()) toast("已载入同步的赛事数据");
+    } catch (error) {
+      ui.loginError = error.message || "同步链接无法读取";
+    }
     renderApp();
     if ("serviceWorker" in navigator && window.location.protocol.startsWith("http")) {
       navigator.serviceWorker.register("./sw.js").catch(() => {});
     }
   }
 
-  init();
+  init().catch((error) => {
+    console.error(error);
+    renderApp();
+  });
 })();
 
 </script>
