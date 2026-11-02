@@ -2898,6 +2898,43 @@ body.at-login {
   border-radius: 11px;
 }
 
+.selection-bar {
+  margin-bottom: 10px;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #704d17;
+  background: #fff7e8;
+  border: 1px solid #efdfbe;
+  border-radius: 12px;
+}
+
+.selection-bar strong {
+  font-size: 10px;
+}
+
+.selection-bar > span {
+  flex: 1;
+  color: #8d723f;
+  font-size: 9px;
+}
+
+.data-table input[type="checkbox"],
+.mobile-person-card > .mobile-person-head > input[type="checkbox"] {
+  width: 17px;
+  height: 17px;
+  accent-color: var(--green-700);
+}
+
+.data-table tr.selected-row {
+  background: #f2f8f4;
+}
+
+.data-table tr.selected-row td {
+  border-bottom-color: #d9e8df;
+}
+
 @media (max-width: 920px) {
   .login-page {
     grid-template-columns: minmax(0, 1fr);
@@ -3009,6 +3046,20 @@ body.at-login {
 
   .score-row-button {
     width: 100%;
+  }
+
+  .selection-bar {
+    align-items: stretch;
+    flex-wrap: wrap;
+  }
+
+  .selection-bar > span {
+    width: 100%;
+    flex-basis: 100%;
+  }
+
+  .selection-bar > .button {
+    flex: 1;
   }
 }
 
@@ -3566,8 +3617,11 @@ button.management-row:hover {
   const EVENT_META = {
     ms: { name: "男子单打", short: "男单", mark: "M", order: 1 },
     ws: { name: "女子单打", short: "女单", mark: "W", order: 2 },
-    xd: { name: "混合双打", short: "混双", mark: "X", order: 3 },
+    md: { name: "男子双打", short: "男双", mark: "MD", order: 3 },
+    wd: { name: "女子双打", short: "女双", mark: "WD", order: 4 },
+    xd: { name: "混合双打", short: "混双", mark: "XD", order: 5 },
   };
+  const PAIR_EVENTS = new Set(["md", "wd", "xd"]);
   const STAGE_LABELS = {
     group: "小组赛",
     round32: "32强赛",
@@ -3595,8 +3649,10 @@ button.management-row:hover {
     sortKey: "name",
     sortDirection: 1,
     loginError: "",
+    participantSelectMode: false,
   };
   let toastTimer = 0;
+  const selectedParticipantIds = new Set();
 
   const icons = {
     dashboard: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg>`,
@@ -3675,18 +3731,32 @@ button.management-row:hover {
       ["陈奕辰", "侦查系", "M"], ["王嘉树", "治安系", "M"],
       ["李承远", "法律系", "M"], ["赵一川", "警训部", "M"],
       ["许博文", "网安系", "M"], ["沈浩然", "交通系", "M"],
+      ["何景行", "治安系", "M"], ["程宇航", "侦查系", "M"],
+      ["江远舟", "办公室", "M"], ["陆景明", "警体部", "M"],
+      ["谢云舟", "交通系", "M"], ["秦子墨", "法律系", "M"],
+      ["韩承泽", "网安系", "M"], ["罗嘉言", "警训部", "M"],
       ["苏婉宁", "警体部", "F"], ["顾清禾", "办公室", "F"],
       ["程若溪", "侦查系", "F"], ["叶知夏", "治安系", "F"],
       ["唐以宁", "法律系", "F"], ["宋安然", "警训部", "F"],
       ["江语柔", "网安系", "F"], ["陆星遥", "交通系", "F"],
+      ["夏知微", "治安系", "F"], ["白若桐", "侦查系", "F"],
+      ["温以棠", "办公室", "F"], ["沈念初", "警体部", "F"],
+      ["梁清越", "交通系", "F"], ["纪南乔", "法律系", "F"],
+      ["谢语桐", "网安系", "F"], ["余书瑶", "警训部", "F"],
     ];
     const result = [];
+    const personIds = new Map();
     people.forEach(([name, department, gender], index) => {
       const personId = `demo-person-${String(index + 1).padStart(2, "0")}`;
+      personIds.set(name, personId);
       result.push({
         id: makeId("entry"),
         personId,
         name,
+        partnerName: "",
+        partnerGender: "",
+        partnerDepartment: "",
+        partnerPersonId: "",
         department,
         gender,
         event: gender === "M" ? "ms" : "ws",
@@ -3695,31 +3765,49 @@ button.management-row:hover {
         seed: false,
         demo: true,
       });
+    });
+
+    const males = people.filter((person) => person[2] === "M");
+    const females = people.filter((person) => person[2] === "F");
+    const addPair = (event, first, second) => {
       result.push({
         id: makeId("entry"),
-        personId,
-        name,
-        department,
-        gender,
-        event: "xd",
-        pool: index % 2 === 0 ? "A" : "B",
+        personId: personIds.get(first[0]),
+        name: first[0],
+        partnerName: second[0],
+        partnerGender: second[2],
+        partnerDepartment: second[1],
+        partnerPersonId: personIds.get(second[0]),
+        department: first[1],
+        gender: first[2],
+        event,
+        pool: "",
         phone: "",
         seed: false,
         demo: true,
       });
-    });
+    };
+    for (let index = 0; index < males.length; index += 2) {
+      addPair("md", males[index], males[index + 1]);
+    }
+    for (let index = 0; index < females.length; index += 2) {
+      addPair("wd", females[index], females[index + 1]);
+    }
+    for (let index = 0; index < males.length; index += 1) {
+      addPair("xd", males[index], females[index]);
+    }
     return result;
   }
 
   function defaultState() {
     return {
-      version: 1,
+      version: 2,
       config: {
         name: "运动会羽毛球项目",
         venue: "警体馆三楼",
         date: "2026-11-13",
         times: [...DEFAULT_TIMES],
-        rules: "21分制，一局定胜负，11分交换场地；男单、女单全程淘汰；混双分ABCD四组，每组前两名晋级八强。",
+        rules: "21分制，一局定胜负，11分交换场地；男单、女单全程淘汰；男双、女双、混双按自由报名组合参赛，分成ABCD四组，每组前两名晋级八强。",
         demo: true,
       },
       participants: demoParticipants(),
@@ -3780,6 +3868,18 @@ button.management-row:hover {
       courts: Array.isArray(parsed.courts) ? parsed.courts : defaults.courts,
       participants: Array.isArray(parsed.participants) ? parsed.participants : defaults.participants,
     };
+    if ((parsed.version || 1) < 2) {
+      if (parsed.config?.demo || parsed.participants?.every?.((entry) => entry.demo)) {
+        normalized.participants = defaults.participants;
+        normalized.config = defaults.config;
+      } else {
+        normalized.participants = normalized.participants.filter((entry) =>
+          !PAIR_EVENTS.has(entry.event) || Boolean(entry.partnerName)
+        );
+      }
+      normalized.draws = {};
+      normalized.version = 2;
+    }
     if (normalized.draws.ms && normalized.draws.ms.mode !== "knockout") {
       delete normalized.draws.ms;
     }
@@ -3907,6 +4007,28 @@ button.management-row:hover {
     return state.participants.filter((entry) => entry.event === code);
   }
 
+  function entryPeople(entry) {
+    const people = [{ id: entry.personId, name: entry.name, gender: entry.gender }];
+    if (entry.partnerName) {
+      people.push({
+        id: entry.partnerPersonId || `${entry.id}-partner`,
+        name: entry.partnerName,
+        gender: entry.partnerGender,
+      });
+    }
+    return people;
+  }
+
+  function uniqueAttendees() {
+    const people = new Map();
+    state.participants.forEach((entry) => {
+      entryPeople(entry).forEach((person) => {
+        if (person.id) people.set(person.id, person);
+      });
+    });
+    return [...people.values()];
+  }
+
   function getDraw(code) {
     return state.draws[code] || null;
   }
@@ -3978,7 +4100,7 @@ button.management-row:hover {
 
   function createTeams(code) {
     const entries = entriesFor(code);
-    if (code !== "xd") {
+    if (!PAIR_EVENTS.has(code)) {
       return {
         teams: entries.map((entry) => ({
           id: makeId("team"),
@@ -3994,38 +4116,24 @@ button.management-row:hover {
       };
     }
 
-    const poolA = shuffle(entries.filter((entry) => entry.pool === "A"));
-    const poolB = shuffle(entries.filter((entry) => entry.pool === "B"));
-    const pairCount = Math.min(poolA.length, poolB.length);
-    const teams = [];
-    for (let index = 0; index < pairCount; index += 1) {
-      const a = poolA[index];
-      const b = poolB[index];
-      teams.push({
+    const teams = entries.map((entry) => ({
         id: makeId("team"),
-        name: `${a.name} / ${b.name}`,
-        department: [...new Set([a.department, b.department])].join("、"),
-        seed: Boolean(a.seed || b.seed),
-        memberIds: [a.id, b.id],
-        memberPersonIds: [a.personId, b.personId],
+        name: `${entry.name} / ${entry.partnerName}`,
+        department: [...new Set([entry.department, entry.partnerDepartment])]
+          .filter(Boolean)
+          .join("、"),
+        seed: Boolean(entry.seed),
+        memberIds: [entry.id],
+        memberPersonIds: [entry.personId, entry.partnerPersonId].filter(Boolean),
         members: [
-          { name: a.name, department: a.department, pool: "A" },
-          { name: b.name, department: b.department, pool: "B" },
+          { name: entry.name, department: entry.department, pool: "" },
+          { name: entry.partnerName, department: entry.partnerDepartment, pool: "" },
         ],
-      });
-    }
+      }));
     return {
       teams,
-      pairing: {
-        aCount: poolA.length,
-        bCount: poolB.length,
-        pairCount,
-      },
-      unpaired: [...poolA.slice(pairCount), ...poolB.slice(pairCount)].map((entry) => ({
-        id: entry.id,
-        name: entry.name,
-        pool: entry.pool,
-      })),
+      pairing: null,
+      unpaired: [],
     };
   }
 
@@ -4193,24 +4301,22 @@ button.management-row:hover {
 
   function createDraw(code) {
     if (!EVENT_META[code]) throw new Error("比赛项目不存在");
-    if (code === "xd") {
-      const poolA = entriesFor(code).filter((entry) => entry.pool === "A");
-      const poolB = entriesFor(code).filter((entry) => entry.pool === "B");
-      if (poolA.length < 2 || poolB.length < 2) {
-        throw new Error("混双抽签至少需要 A、B 组各 2 人");
+    if (PAIR_EVENTS.has(code)) {
+      if (entriesFor(code).length < 8) {
+        throw new Error(`${eventName(code)}至少需要 8 个已报名组合`);
       }
     } else if (entriesFor(code).length < 2) {
       throw new Error(`${eventName(code)}至少需要 2 名参赛人员`);
     }
 
     const { teams, pairing, unpaired } = createTeams(code);
-    let resultsMode = code === "xd" ? "groups" : "knockout";
+    let resultsMode = PAIR_EVENTS.has(code) ? "groups" : "knockout";
     let groupBuckets = null;
     let matches;
     if (resultsMode === "knockout") {
       matches = createKnockoutSkeleton(teams, code);
     } else {
-      if (teams.length < 4) throw new Error("混双可参与比赛的组合不足 4 组");
+      if (teams.length < 8) throw new Error("双打 ABCD 小组赛至少需要 8 个组合");
       groupBuckets = { A: [], B: [], C: [], D: [] };
       const seeded = shuffle(teams.filter((team) => team.seed));
       seeded.forEach((team, index) => {
@@ -4598,6 +4704,10 @@ button.management-row:hover {
 
   function navigate(view) {
     if (!navItems.some((item) => item.id === view)) return;
+    if (view !== "participants") {
+      ui.participantSelectMode = false;
+      selectedParticipantIds.clear();
+    }
     ui.view = view;
     ui.modal = null;
     window.location.hash = view;
@@ -4736,7 +4846,7 @@ button.management-row:hover {
 
   function renderOverview() {
     const admin = isAdmin();
-    const uniquePeople = new Set(state.participants.map((entry) => entry.personId)).size;
+    const uniquePeople = uniqueAttendees().length;
     const stats = scheduleStats();
     const upcoming = scheduledMatches().filter((match) => !match.winnerId).slice(0, 3);
     const drawCount = Object.keys(state.draws).length;
@@ -4782,7 +4892,7 @@ button.management-row:hover {
           </div>
           <div class="hero-stats">
             <div class="hero-stat"><strong>${uniquePeople}</strong><span>参赛人员</span></div>
-            <div class="hero-stat"><strong>${drawCount}<small style="font-size:12px">/3</small></strong><span>已抽签项目</span></div>
+            <div class="hero-stat"><strong>${drawCount}<small style="font-size:12px">/${Object.keys(EVENT_META).length}</small></strong><span>已抽签项目</span></div>
             <div class="hero-stat"><strong>${activeCourts}</strong><span>启用场地</span></div>
           </div>
         </div>
@@ -4912,7 +5022,7 @@ button.management-row:hover {
       .filter((entry) => ui.participantEvent === "all" || entry.event === ui.participantEvent)
       .filter((entry) => {
         if (!query) return true;
-        return [entry.name, entry.department, entry.phone, eventName(entry.event), entry.pool]
+        return [entry.name, entry.partnerName, entry.department, entry.partnerDepartment, entry.phone, eventName(entry.event)]
           .join(" ")
           .toLocaleLowerCase("zh-CN")
           .includes(query);
@@ -4930,23 +5040,28 @@ button.management-row:hover {
       });
   }
 
+  function allVisibleParticipantsSelected(entries = filteredParticipants()) {
+    return entries.length > 0 && entries.every((entry) => selectedParticipantIds.has(entry.id));
+  }
+
   function renderParticipants() {
     const admin = isAdmin();
     const entries = filteredParticipants();
-    const uniquePeople = new Set(state.participants.map((entry) => entry.personId)).size;
-    const male = new Set(state.participants.filter((entry) => entry.gender === "M").map((entry) => entry.personId)).size;
-    const female = new Set(state.participants.filter((entry) => entry.gender === "F").map((entry) => entry.personId)).size;
-    const mixedA = entriesFor("xd").filter((entry) => entry.pool === "A").length;
-    const mixedB = entriesFor("xd").filter((entry) => entry.pool === "B").length;
+    const attendees = uniqueAttendees();
+    const uniquePeople = attendees.length;
+    const male = attendees.filter((person) => person.gender === "M").length;
+    const female = attendees.filter((person) => person.gender === "F").length;
+    const pairCount = state.participants.filter((entry) => PAIR_EVENTS.has(entry.event)).length;
 
     return `
       <div class="page-heading">
         <div>
           <h1>参赛人员</h1>
-          <p>${admin ? "管理男单、女单与混双报名；混双请明确选择 A 组或 B 组。" : "当前账号为只读权限，可查看赛事名单与分组信息。"}</p>
+          <p>${admin ? "管理单打与双打报名；男双、女双、混双均按自由组合报名，不重新分配搭档。" : "当前账号为只读权限，可查看赛事名单与分组信息。"}</p>
         </div>
         <div class="heading-actions">
           ${admin ? `
+            <button class="button ${ui.participantSelectMode ? "danger" : ""}" type="button" data-action="toggle-participant-select">${icons.trash} ${ui.participantSelectMode ? "退出批量删除" : "批量删除"}</button>
             <button class="button" type="button" data-action="open-batch-import">${icons.upload} 批量导入</button>
             <button class="button dark" type="button" data-action="open-participant">${icons.plus} 新增人员</button>
           ` : `<span class="status-pill">只读名单</span>`}
@@ -4957,7 +5072,7 @@ button.management-row:hover {
         <div class="stat-card"><span>实到人数</span><strong>${uniquePeople}<small> 人</small></strong></div>
         <div class="stat-card"><span>男子选手</span><strong>${male}<small> 人</small></strong></div>
         <div class="stat-card"><span>女子选手</span><strong>${female}<small> 人</small></strong></div>
-        <div class="stat-card"><span>混双池</span><strong>${mixedA}<small> A</small> · ${mixedB}<small> B</small></strong></div>
+        <div class="stat-card"><span>双打组合</span><strong>${pairCount}<small> 组</small></strong></div>
       </div>
 
       <div class="toolbar">
@@ -4986,35 +5101,45 @@ button.management-row:hover {
           </button>
         `).join("")}
       </div>
+      ${admin && ui.participantSelectMode ? `
+        <div class="selection-bar">
+          <strong>已选择 ${selectedParticipantIds.size} 条报名记录</strong>
+          <span>双打组合按一条记录整体删除</span>
+          <button class="button small" type="button" data-action="select-all-participants">${allVisibleParticipantsSelected(entries) ? "取消全选" : "选择当前全部"}</button>
+          <button class="button danger small" type="button" data-action="batch-delete-participants" ${selectedParticipantIds.size ? "" : "disabled"}>${icons.trash} 删除所选</button>
+        </div>
+      ` : ""}
 
       <div class="table-card">
         ${entries.length ? `
           <table class="data-table">
             <thead>
               <tr>
+                ${ui.participantSelectMode ? `<th><input type="checkbox" aria-label="选择全部" data-action="select-all-participants" ${allVisibleParticipantsSelected(entries) ? "checked" : ""} /></th>` : ""}
                 <th><button class="sort-button ${ui.sortKey === "name" ? "active" : ""}" type="button" data-action="sort-participants" data-key="name">参赛人员</button></th>
                 <th><button class="sort-button ${ui.sortKey === "department" ? "active" : ""}" type="button" data-action="sort-participants" data-key="department">所属单位</button></th>
                 <th><button class="sort-button ${ui.sortKey === "event" ? "active" : ""}" type="button" data-action="sort-participants" data-key="event">参赛项目</button></th>
-                <th>组别 / 备注</th>
+                <th>搭档 / 备注</th>
                 <th>联系电话</th>
                 <th style="text-align:right">操作</th>
               </tr>
             </thead>
             <tbody>
               ${entries.map((entry) => `
-                <tr>
+                <tr class="${selectedParticipantIds.has(entry.id) ? "selected-row" : ""}">
+                  ${ui.participantSelectMode ? `<td><input type="checkbox" aria-label="选择 ${esc(entry.name)}" data-select-participant="${entry.id}" ${selectedParticipantIds.has(entry.id) ? "checked" : ""} /></td>` : ""}
                   <td>
                     <div class="person">
                       <span class="avatar">${esc(initials(entry.name))}</span>
                       <span class="person-copy">
                         <strong>${esc(entry.name)} ${entry.seed ? '<span class="seed-mark">种子</span>' : ""}</strong>
-                        <span>${entry.gender === "M" ? "男子选手" : "女子选手"}${entry.demo ? " · 示例" : ""}</span>
+                        <span>${PAIR_EVENTS.has(entry.event) ? `搭档：${esc(entry.partnerName)}` : (entry.gender === "M" ? "男子选手" : "女子选手")}${entry.demo ? " · 示例" : ""}</span>
                       </span>
                     </div>
                   </td>
                   <td>${esc(entry.department || "未填写")}</td>
                   <td><span class="event-tag">${eventName(entry.event)}</span></td>
-                  <td>${entry.event === "xd" ? `${esc(entry.pool)} 组` : "—"}</td>
+                  <td>${PAIR_EVENTS.has(entry.event) ? `${esc(entry.partnerName)} · ${entry.partnerGender === "M" ? "男" : "女"}` : "—"}</td>
                   <td>${esc(entry.phone || "—")}</td>
                   <td>
                     <div class="table-actions">
@@ -5032,17 +5157,18 @@ button.management-row:hover {
             ${entries.map((entry) => `
               <article class="mobile-person-card">
                 <div class="mobile-person-head">
+                  ${ui.participantSelectMode ? `<input type="checkbox" aria-label="选择 ${esc(entry.name)}" data-select-participant="${entry.id}" ${selectedParticipantIds.has(entry.id) ? "checked" : ""} />` : ""}
                   <div class="person">
                     <span class="avatar">${esc(initials(entry.name))}</span>
                     <span class="person-copy">
                       <strong>${esc(entry.name)} ${entry.seed ? '<span class="seed-mark">种子</span>' : ""}</strong>
-                      <span>${esc(entry.department || "未填写单位")} · ${entry.gender === "M" ? "男" : "女"}</span>
+                      <span>${esc(entry.department || "未填写单位")} · ${entry.gender === "M" ? "男" : "女"}${PAIR_EVENTS.has(entry.event) ? ` · 搭档 ${esc(entry.partnerName)}` : ""}</span>
                     </span>
                   </div>
                   <span class="event-tag">${eventName(entry.event)}</span>
                 </div>
                 <div class="mobile-person-meta">
-                  ${entry.event === "xd" ? `<span class="status-pill">${esc(entry.pool)} 池</span>` : ""}
+                  ${PAIR_EVENTS.has(entry.event) ? `<span class="status-pill">固定搭档</span>` : ""}
                   <span style="color:var(--muted);font-size:10px">${esc(entry.phone || "未留电话")}</span>
                   <div class="table-actions" style="margin-left:auto">
                     ${admin ? `
@@ -5266,7 +5392,7 @@ button.management-row:hover {
     const draw = getDraw(code);
     const stale = draw && isDrawStale(draw, code);
     const list = entriesFor(code);
-    const isKnockout = draw?.mode === "knockout" || (Boolean(draw) && code !== "xd" && !draw.groups);
+    const isKnockout = draw?.mode === "knockout" || (Boolean(draw) && !PAIR_EVENTS.has(code) && !draw.groups);
     const groupMatches = draw ? draw.matches.filter((match) => match.stage === "group") : [];
     const groupDone = groupMatches.filter((match) => match.winnerId).length;
     const nextGroupMatch = groupMatches.find((match) => !match.winnerId);
@@ -5277,7 +5403,7 @@ button.management-row:hover {
       <div class="page-heading">
         <div>
           <h1>抽签编排</h1>
-          <p>${code === "xd" ? "混双先按 A/B 池配对，再进入 ABCD 四组、每组前两名晋级。" : "男单、女单采用全程淘汰制；随机对阵，种子优先分散，胜者直接进入下一轮。"}</p>
+          <p>${PAIR_EVENTS.has(code) ? "按自由报名的固定组合参赛，再进入 ABCD 四组、每组前两名晋级。" : "男单、女单采用全程淘汰制；随机对阵，种子优先分散，胜者直接进入下一轮。"}</p>
         </div>
         <div class="heading-actions">
           <button class="button" type="button" data-nav="participants">${icons.users} 查看名单</button>
@@ -5290,7 +5416,7 @@ button.management-row:hover {
           <div class="event-selector">
             ${Object.keys(EVENT_META).map((event) => {
               const eventDraw = getDraw(event);
-              const unit = event === "xd" ? "支组合" : "名选手";
+              const unit = PAIR_EVENTS.has(event) ? "支组合" : "名选手";
               return `
                 <button class="event-select-item ${code === event ? "active" : ""}" type="button" data-action="select-draw" data-event="${event}">
                   <span><strong>${eventName(event)}</strong><span>${eventDraw ? `${eventDraw.teams.length} ${unit}` : "尚未抽签"}</span></span>
@@ -5301,7 +5427,7 @@ button.management-row:hover {
           </div>
           <div class="draw-note">
             <strong style="display:block;margin-bottom:4px;color:var(--green-800)">本次赛制</strong>
-            21分制，一局定胜负，11分交换场地。${code === "xd" ? "混双先按 A/B 池配对，再统一随机分组，并按男女组合实行让分制。" : "单打全程淘汰，不进行小组循环赛。"}
+            21分制，一局定胜负，11分交换场地。${PAIR_EVENTS.has(code) ? "双打按已报名组合直接抽签分组，不再随机分配搭档。" : "单打全程淘汰，不进行小组循环赛。"}
           </div>
         </aside>
 
@@ -5311,7 +5437,7 @@ button.management-row:hover {
               <div class="empty">
                 <div class="empty-mark">${icons.shuffle}</div>
                 <strong>${eventName(code)}还没有抽签</strong>
-                <p>当前有 ${list.length} 条报名记录。${code === "xd" ? `其中 A 池 ${list.filter((entry) => entry.pool === "A").length} 人，B 池 ${list.filter((entry) => entry.pool === "B").length} 人；系统会先配对，再生成 ABCD 四组。` : "系统会生成直接淘汰的对阵树，胜者自动进入下一轮。"}</p>
+                <p>当前有 ${list.length} 条报名记录。${PAIR_EVENTS.has(code) ? "系统会直接使用已报名的双打组合生成 ABCD 四组，不会重新拆分搭档。" : "系统会生成直接淘汰的对阵树，胜者自动进入下一轮。"}</p>
                 ${admin
                   ? `<button class="button dark" type="button" data-action="create-draw" data-event="${code}">${icons.shuffle} 开始随机抽签</button>`
                   : `<span class="status-pill">等待管理员完成抽签</span>`}
@@ -5325,7 +5451,7 @@ button.management-row:hover {
               <div>
                 <span class="eyebrow" style="margin-bottom:7px">${esc(formatDate(state.config.date))} · ${draw.teams.length} ${isKnockout ? "名选手" : "支组合"}</span>
                 <h2>${eventName(code)} · ${isKnockout ? "全程淘汰" : "分组赛"}</h2>
-                <p>${draw.pairing ? `A 池 ${draw.pairing.aCount} 人 × B 池 ${draw.pairing.bCount} 人，成功配对 ${draw.pairing.pairCount} 组。` : `共 ${draw.teams.length} 名选手随机抽入淘汰赛对阵；标记种子后会优先分散。`}</p>
+                <p>${PAIR_EVENTS.has(code) ? `${draw.teams.length} 个自由报名组合随机进入 ABCD 小组。` : `共 ${draw.teams.length} 名选手随机抽入淘汰赛对阵；标记种子后会优先分散。`}</p>
               </div>
               <div class="draw-actions">
                 ${admin ? `
@@ -5353,10 +5479,6 @@ button.management-row:hover {
                 : `小组赛 ${groupDone} / ${groupMatches.length} 场已全部录入，${canGenerateQuarter(draw) && admin ? "可以生成八强对阵。" : "等待赛事后续推进。"}`
               }</span></div>
             `}
-
-            ${draw.unpaired?.length ? `
-              <div class="callout warn">${icons.info}<span>有 ${draw.unpaired.length} 名混双报名者因另一池人数不足未配对：${draw.unpaired.map((entry) => `${esc(entry.name)}（${entry.pool}池）`).join("、")}。</span></div>
-            ` : ""}
 
             ${isKnockout ? renderSingleKnockout(draw) : `
               <div class="group-grid">
@@ -5651,7 +5773,7 @@ button.management-row:hover {
 
           <section class="card settings-card">
             <div class="card-header">
-              <div class="card-title"><h2>竞赛项目</h2><p>单打全程淘汰；混双采用 ABCD 小组赛</p></div>
+              <div class="card-title"><h2>竞赛项目</h2><p>单打全程淘汰；男双、女双、混双采用 ABCD 小组赛</p></div>
             </div>
             ${Object.keys(EVENT_META).map((code) => {
               const draw = getDraw(code);
@@ -5677,7 +5799,11 @@ button.management-row:hover {
               <span class="status-pill">全程淘汰</span>
             </div>
             <div class="setting-row">
-              <div class="setting-copy"><strong>混双搭配</strong><span>A 池与 B 池随机抽签配对，再统一进入 ABCD 小组。</span></div>
+              <div class="setting-copy"><strong>双打报名</strong><span>男双、女双、混双均按参赛人员自由商定的固定搭档报名，不重新分配搭档，各组合之间竞赛。</span></div>
+              <span class="status-pill">固定搭档</span>
+            </div>
+            <div class="setting-row">
+              <div class="setting-copy"><strong>双打小组</strong><span>各组合随机进入 ABCD 四组，每组前两名晋级八强。</span></div>
               <span class="status-pill">已启用</span>
             </div>
             <div class="setting-row">
@@ -5686,7 +5812,7 @@ button.management-row:hover {
             </div>
             <div class="setting-row">
               <div class="setting-copy"><strong>晋级与淘汰</strong><span>每组前两名晋级八强；A1–B2、B1–C2、C1–D2、D1–A2，半决赛两两随机抽签。</span></div>
-              <span class="status-pill">混双四组制</span>
+              <span class="status-pill">双打四组制</span>
             </div>
             <div class="setting-row">
               <div class="setting-copy"><strong>种子选手</strong><span>种子不会跳过抽签，只会优先分散到不同淘汰赛分区；其他人员仍随机排位。</span></div>
@@ -5735,7 +5861,7 @@ button.management-row:hover {
               <button class="button small" type="button" data-action="export-csv">${icons.download}</button>
             </div>
             <div class="setting-row">
-              <div class="setting-copy"><strong>恢复示例数据</strong><span>重置为 16 名示例选手及默认场地</span></div>
+              <div class="setting-copy"><strong>恢复示例数据</strong><span>重置为 32 名示例选手、单打与三类双打组合</span></div>
               <button class="button small" type="button" data-action="reset-demo">恢复</button>
             </div>
           </section>
@@ -5851,14 +5977,22 @@ button.management-row:hover {
                 `).join("")}
               </select>
             </div>
-            <div class="field" id="participant-pool-field" style="${event === "xd" ? "" : "display:none"}">
-              <label for="participant-pool">混双池 <em>*</em></label>
-              <select id="participant-pool" name="pool">
-                <option value="">请选择 A / B 池</option>
-                <option value="A" ${entry?.pool === "A" ? "selected" : ""}>A 组池</option>
-                <option value="B" ${entry?.pool === "B" ? "selected" : ""}>B 组池</option>
+            <div class="field" data-pair-field style="${PAIR_EVENTS.has(event) ? "" : "display:none"}">
+              <label for="participant-partner">搭档姓名 <em>*</em></label>
+              <input id="participant-partner" name="partnerName" maxlength="20" value="${esc(entry?.partnerName || "")}" placeholder="固定搭档姓名" />
+            </div>
+            <div class="field" data-pair-field style="${PAIR_EVENTS.has(event) ? "" : "display:none"}">
+              <label for="participant-partner-gender">搭档性别 <em>*</em></label>
+              <select id="participant-partner-gender" name="partnerGender">
+                <option value="">请选择</option>
+                <option value="M" ${entry?.partnerGender === "M" ? "selected" : ""}>男</option>
+                <option value="F" ${entry?.partnerGender === "F" ? "selected" : ""}>女</option>
               </select>
-              <div class="field-hint">系统将从 A 池、B 池各抽一人组成混双。</div>
+            </div>
+            <div class="field full" data-pair-field style="${PAIR_EVENTS.has(event) ? "" : "display:none"}">
+              <label for="participant-partner-department">搭档所属单位</label>
+              <input id="participant-partner-department" name="partnerDepartment" maxlength="30" value="${esc(entry?.partnerDepartment || "")}" placeholder="选填；默认与本人单位相同" />
+              <div class="field-hint">双打项目按报名时的固定搭档成组，不会重新抽签分配搭档。</div>
             </div>
             <label class="check-chip" style="grid-column:1/-1">
               <input type="checkbox" name="seed" ${entry?.seed ? "checked" : ""} />
@@ -5877,7 +6011,7 @@ button.management-row:hover {
   function batchImportModal() {
     return modalShell({
       title: "批量导入参赛名单",
-      subtitle: "一行一人，建议直接使用 Excel 整理后粘贴。",
+      subtitle: "一行一条报名记录；双打项目一行填写一个已商定的组合。",
       wide: true,
       body: `
         <form id="batch-form" data-form="batch">
@@ -5890,11 +6024,11 @@ button.management-row:hover {
           ` : ""}
           <div class="field">
             <label for="batch-text">名单内容 <em>*</em></label>
-            <textarea id="batch-text" name="text" required style="min-height:250px;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;line-height:1.8" placeholder="姓名,单位,性别,项目,组别,电话&#10;林泽宇,警体部,男,男单,,13800001001&#10;苏婉宁,警体部,女,女单,,13800001002&#10;周子昂,办公室,男,混双,A,13800001003&#10;顾清禾,办公室,女,混双,B,13800001004"></textarea>
+            <textarea id="batch-text" name="text" required style="min-height:250px;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;line-height:1.8" placeholder="序号,姓名,搭档,性别,搭档性别,所属单位,搭档单位,参赛项目,联系电话,种子&#10;1,林泽宇,,男,,警体部,,男单,13800001001,否&#10;2,周子昂,李承远,男,男,办公室,法律系,男双,13800001002,否&#10;3,苏婉宁,顾清禾,女,女,警体部,办公室,女双,13800001003,否&#10;4,陈奕辰,程若溪,男,女,侦查系,侦查系,混双,13800001004,是"></textarea>
           </div>
           <div class="callout" style="margin:13px 0 0">
             ${icons.info}
-            <span>列顺序固定为：姓名, 单位, 性别, 项目, 组别, 电话。项目支持“男单 / 男子单打”“女单 / 女子单打”“混双 / 混合双打”；混双的组别必须填写 A 或 B。</span>
+            <span>支持带表头直接导入。双打项目必须填写“搭档”和“搭档性别”，系统不会再随机分配搭档；序号列可以保留，导入时会自动剔除。</span>
           </div>
         </form>
       `,
@@ -6344,13 +6478,16 @@ button.management-row:hover {
   }
 
   function exportCsv() {
-    const header = ["姓名", "所属单位", "性别", "参赛项目", "混双池", "联系电话", "种子"];
-    const lines = state.participants.map((entry) => [
+    const header = ["序号", "姓名", "搭档", "性别", "搭档性别", "所属单位", "搭档单位", "参赛项目", "联系电话", "种子"];
+    const lines = state.participants.map((entry, index) => [
+      index + 1,
       entry.name,
-      entry.department,
+      entry.partnerName || "",
       entry.gender === "M" ? "男" : "女",
+      entry.partnerGender === "M" ? "男" : entry.partnerGender === "F" ? "女" : "",
+      entry.department,
+      entry.partnerDepartment || "",
       eventName(entry.event),
-      entry.pool || "",
       entry.phone || "",
       entry.seed ? "是" : "否",
     ].map(csvCell).join(","));
@@ -6379,14 +6516,7 @@ button.management-row:hover {
         if (!parsed.config || !Array.isArray(parsed.participants) || !parsed.draws) {
           throw new Error("备份文件结构不正确");
         }
-        state = {
-          ...defaultState(),
-          ...parsed,
-          config: { ...defaultState().config, ...parsed.config },
-          draws: parsed.draws || {},
-          staff: Array.isArray(parsed.staff) ? parsed.staff : initialStaff(),
-          courts: Array.isArray(parsed.courts) ? parsed.courts : initialCourts(),
-        };
+        state = normalizeState(parsed);
         saveState();
         ui.scheduleDate = state.config.date;
         closeModal();
@@ -6420,6 +6550,8 @@ button.management-row:hover {
     const normalized = String(value || "").trim().toLocaleLowerCase("zh-CN");
     if (/男单|男子单打|^ms$/.test(normalized)) return "ms";
     if (/女单|女子单打|^ws$/.test(normalized)) return "ws";
+    if (/男双|男子双打|^md$/.test(normalized)) return "md";
+    if (/女双|女子双打|^wd$/.test(normalized)) return "wd";
     if (/混双|混合双打|^xd$/.test(normalized)) return "xd";
     return null;
   }
@@ -6438,15 +6570,19 @@ button.management-row:hover {
 
   function findPersonId(name, department) {
     const key = personKey(name, department);
-    return state.participants.find((entry) => personKey(entry.name, entry.department) === key)?.personId;
+    return state.participants.find((entry) =>
+      personKey(entry.name, entry.department) === key
+    )?.personId || state.participants.find((entry) =>
+      entry.partnerName && personKey(entry.partnerName, entry.partnerDepartment) === key
+    )?.partnerPersonId;
   }
 
-  function hasDuplicateRegistration(personId, event, pool, exceptId = "") {
+  function hasDuplicateRegistration(personId, partnerPersonId, event, exceptId = "") {
+    const signature = [personId, partnerPersonId].filter(Boolean).sort().join("|");
     return state.participants.some((entry) =>
       entry.id !== exceptId &&
-      entry.personId === personId &&
       entry.event === event &&
-      (event !== "xd" || entry.pool === pool)
+      [entry.personId, entry.partnerPersonId].filter(Boolean).sort().join("|") === signature
     );
   }
 
@@ -6458,31 +6594,68 @@ button.management-row:hover {
     const data = new FormData(form);
     const id = String(data.get("id") || "");
     const name = String(data.get("name") || "").trim();
+    const partnerName = String(data.get("partnerName") || "").trim();
     const department = String(data.get("department") || "").trim();
+    const partnerDepartment = String(data.get("partnerDepartment") || "").trim() || department;
     const gender = String(data.get("gender") || "");
+    const partnerGender = String(data.get("partnerGender") || "");
     const event = String(data.get("event") || "");
-    const pool = event === "xd" ? String(data.get("pool") || "") : "";
     const phone = String(data.get("phone") || "").trim();
     const seed = data.get("seed") === "on";
     if (!name || !department) throw new Error("请填写姓名和所属单位");
     if (!EVENT_META[event]) throw new Error("请选择有效比赛项目");
-    if (event === "xd" && !["A", "B"].includes(pool)) throw new Error("混双人员必须选择 A 组或 B 组池");
+    if (PAIR_EVENTS.has(event)) {
+      if (!partnerName || !["M", "F"].includes(partnerGender)) {
+        throw new Error("双打项目必须填写搭档姓名和搭档性别");
+      }
+      if (event === "md" && (gender !== "M" || partnerGender !== "M")) {
+        throw new Error("男子双打的两名选手都必须是男性");
+      }
+      if (event === "wd" && (gender !== "F" || partnerGender !== "F")) {
+        throw new Error("女子双打的两名选手都必须是女性");
+      }
+      if (event === "xd" && gender === partnerGender) {
+        throw new Error("混合双打必须由一名男选手和一名女选手组成");
+      }
+    }
     const existing = state.participants.find((entry) => entry.id === id);
     const personId = existing?.personId || findPersonId(name, department) || makeId("person");
-    if (hasDuplicateRegistration(personId, event, pool, id)) {
-      throw new Error("该人员在同一项目中已经报名");
+    const partnerPersonId = PAIR_EVENTS.has(event)
+      ? (existing?.partnerName === partnerName && existing?.partnerDepartment === partnerDepartment
+          ? existing.partnerPersonId
+          : findPersonId(partnerName, partnerDepartment)) || makeId("person")
+      : "";
+    if (personId === partnerPersonId) throw new Error("本人不能同时作为自己的搭档");
+    if (hasDuplicateRegistration(personId, partnerPersonId, event, id)) {
+      throw new Error("该组合在同一项目中已经报名");
     }
     if (existing) {
-      Object.assign(existing, { name, department, gender, event, pool, phone, seed });
+      Object.assign(existing, {
+        name,
+        partnerName: PAIR_EVENTS.has(event) ? partnerName : "",
+        department,
+        partnerDepartment: PAIR_EVENTS.has(event) ? partnerDepartment : "",
+        gender,
+        partnerGender: PAIR_EVENTS.has(event) ? partnerGender : "",
+        partnerPersonId,
+        event,
+        pool: "",
+        phone,
+        seed,
+      });
     } else {
       state.participants.push({
         id: makeId("entry"),
         personId,
         name,
+        partnerName: PAIR_EVENTS.has(event) ? partnerName : "",
         department,
+        partnerDepartment: PAIR_EVENTS.has(event) ? partnerDepartment : "",
         gender,
+        partnerGender: PAIR_EVENTS.has(event) ? partnerGender : "",
+        partnerPersonId,
         event,
-        pool,
+        pool: "",
         phone,
         seed,
         demo: false,
@@ -6495,30 +6668,156 @@ button.management-row:hover {
     toast(existing ? "参赛信息已更新" : "参赛人员已录入");
   }
 
+  function splitCsvLine(line) {
+    const values = [];
+    let current = "";
+    let quoted = false;
+    for (let index = 0; index < line.length; index += 1) {
+      const character = line[index];
+      if (character === '"') {
+        if (quoted && line[index + 1] === '"') {
+          current += '"';
+          index += 1;
+        } else {
+          quoted = !quoted;
+        }
+      } else if (!quoted && (character === "," || character === "，" || character === "\t")) {
+        values.push(current.trim());
+        current = "";
+      } else {
+        current += character;
+      }
+    }
+    values.push(current.trim());
+    return values;
+  }
+
+  function cleanImportedName(value) {
+    return String(value || "")
+      .replace(/^\uFEFF/, "")
+      .trim()
+      .replace(/^\d+\s*[、.．:：,，\-]\s*/, "")
+      .trim();
+  }
+
+  function parseSeedValue(value) {
+    return /^(是|种子|yes|true|1)$/i.test(String(value || "").trim());
+  }
+
   function saveBatch(form) {
     const data = new FormData(form);
     const raw = String(data.get("text") || "");
     const replaceDemo = data.get("replaceDemo") === "on";
-    const rows = raw.split(/\r?\n/).map((line) => line.trim()).filter((line) => line && !line.startsWith("#"));
-    if (!rows.length) throw new Error("请粘贴参赛名单");
+    const lines = raw.split(/\r?\n/).map((line) => line.trim()).filter((line) => line && !line.startsWith("#"));
+    if (!lines.length) throw new Error("请粘贴参赛名单");
+
+    const firstCells = splitCsvLine(lines[0]);
+    const headerAliases = {
+      "序号": "sequence", "姓名": "name", "搭档": "partnerName",
+      "性别": "gender", "搭档性别": "partnerGender", "所属单位": "department",
+      "单位": "department", "搭档单位": "partnerDepartment", "参赛项目": "event",
+      "项目": "event", "联系电话": "phone", "电话": "phone", "种子": "seed",
+    };
+    const hasHeader = firstCells.some((cell) => headerAliases[cell.trim()]);
+    const headerMap = hasHeader
+      ? Object.fromEntries(firstCells.map((cell, index) => [headerAliases[cell.trim()] || `column${index}`, index]))
+      : null;
+    const dataLines = hasHeader ? lines.slice(1) : lines;
     const parsed = [];
     const errors = [];
-    rows.forEach((line, index) => {
-      const columns = line.split(/\t|,|，/).map((value) => value.trim());
-      const [name, department, genderValue, eventValue, poolValue = "", phone = ""] = columns;
-      const event = parseEvent(eventValue);
-      const gender = normalizeGender(genderValue, event);
-      const pool = event === "xd" ? poolValue.toUpperCase() : "";
-      if (!name || !department || !event || !["M", "F"].includes(gender)) {
-        errors.push(`第 ${index + 1} 行信息不完整`);
+
+    dataLines.forEach((line, index) => {
+      let columns = splitCsvLine(line);
+      let row = {};
+      if (headerMap) {
+        Object.entries(headerMap).forEach(([key, columnIndex]) => {
+          if (!key.startsWith("column")) row[key] = columns[columnIndex] || "";
+        });
+      } else {
+        if (/^\d+$/.test(columns[0] || "")) columns = columns.slice(1);
+        const eventIndex = columns.findIndex((cell) => parseEvent(cell));
+        if (eventIndex < 0) {
+          errors.push(`第 ${index + 1} 行未识别比赛项目`);
+          return;
+        }
+        if (eventIndex <= 3) {
+          row = {
+            name: cleanImportedName(columns[0]),
+            department: columns[1] || "",
+            gender: columns[2] || "",
+            event: columns[3] || "",
+            phone: columns[5] || columns[4] || "",
+          };
+        } else {
+          row = {
+            name: cleanImportedName(columns[0]),
+            partnerName: cleanImportedName(columns[1]),
+            gender: columns[2] || "",
+            partnerGender: columns[3] || "",
+            department: columns[4] || "",
+            partnerDepartment: columns[5] || columns[4] || "",
+            event: columns[6] || columns[5] || "",
+            phone: columns[7] || "",
+            seed: columns[8] || "",
+          };
+          if (!parseEvent(row.event) && parseEvent(columns[5])) {
+            row.event = columns[5];
+            row.partnerDepartment = row.department;
+            row.department = columns[4] || "";
+            row.phone = columns[6] || "";
+            row.seed = columns[7] || "";
+          }
+        }
+      }
+
+      const name = cleanImportedName(row.name);
+      const partnerName = cleanImportedName(row.partnerName);
+      const department = String(row.department || "").trim();
+      const partnerDepartment = String(row.partnerDepartment || "").trim() || department;
+      const event = parseEvent(row.event);
+      const gender = normalizeGender(row.gender, event);
+      let partnerGender = normalizeGender(row.partnerGender, event);
+      if (event === "md") partnerGender = "M";
+      if (event === "wd") partnerGender = "F";
+      if (!name || !department || !event) {
+        errors.push(`第 ${index + 1} 行姓名、单位或项目不完整`);
         return;
       }
-      if (event === "xd" && !["A", "B"].includes(pool)) {
-        errors.push(`第 ${index + 1} 行混双组别须为 A 或 B`);
+      if (!["M", "F"].includes(gender)) {
+        errors.push(`第 ${index + 1} 行性别无法识别`);
         return;
       }
-      parsed.push({ name, department, gender, event, pool, phone });
+      if (PAIR_EVENTS.has(event)) {
+        if (!partnerName || !["M", "F"].includes(partnerGender)) {
+          errors.push(`第 ${index + 1} 行双打缺少搭档或搭档性别`);
+          return;
+        }
+        if (event === "md" && (gender !== "M" || partnerGender !== "M")) {
+          errors.push(`第 ${index + 1} 行男子双打性别不正确`);
+          return;
+        }
+        if (event === "wd" && (gender !== "F" || partnerGender !== "F")) {
+          errors.push(`第 ${index + 1} 行女子双打性别不正确`);
+          return;
+        }
+        if (event === "xd" && gender === partnerGender) {
+          errors.push(`第 ${index + 1} 行混合双打须为一男一女`);
+          return;
+        }
+      }
+      parsed.push({
+        name,
+        partnerName: PAIR_EVENTS.has(event) ? partnerName : "",
+        department,
+        partnerDepartment: PAIR_EVENTS.has(event) ? partnerDepartment : "",
+        gender,
+        partnerGender: PAIR_EVENTS.has(event) ? partnerGender : "",
+        event,
+        phone: String(row.phone || "").trim(),
+        seed: parseSeedValue(row.seed),
+      });
     });
+    if (!parsed.length) throw new Error(errors[0] || "没有可导入的有效记录");
     if (errors.length) {
       throw new Error(`${errors.slice(0, 2).join("；")}${errors.length > 2 ? `，另有 ${errors.length - 2} 行错误` : ""}`);
     }
@@ -6527,15 +6826,19 @@ button.management-row:hover {
     let skipped = 0;
     parsed.forEach((row) => {
       const personId = findPersonId(row.name, row.department) || makeId("person");
-      if (hasDuplicateRegistration(personId, row.event, row.pool)) {
+      const partnerPersonId = PAIR_EVENTS.has(row.event)
+        ? findPersonId(row.partnerName, row.partnerDepartment) || makeId("person")
+        : "";
+      if (hasDuplicateRegistration(personId, partnerPersonId, row.event)) {
         skipped += 1;
         return;
       }
       state.participants.push({
         id: makeId("entry"),
         personId,
+        partnerPersonId,
         ...row,
-        seed: false,
+        pool: "",
         demo: false,
       });
       added += 1;
@@ -6746,19 +7049,30 @@ button.management-row:hover {
   }
 
   function handleChange(event) {
+    if (event.target.dataset.selectParticipant) {
+      if (event.target.checked) selectedParticipantIds.add(event.target.dataset.selectParticipant);
+      else selectedParticipantIds.delete(event.target.dataset.selectParticipant);
+      renderApp();
+      return;
+    }
     if (event.target.id === "participant-event-filter") {
       ui.participantEvent = event.target.value;
       renderApp();
       return;
     }
     if (event.target.id === "participant-event") {
-      const poolField = document.getElementById("participant-pool-field");
-      const poolSelect = document.getElementById("participant-pool");
-      const isMixed = event.target.value === "xd";
-      if (poolField) poolField.style.display = isMixed ? "" : "none";
-      if (poolSelect) {
-        poolSelect.required = isMixed;
-        if (!isMixed) poolSelect.value = "";
+      const isPair = PAIR_EVENTS.has(event.target.value);
+      document.querySelectorAll("[data-pair-field]").forEach((field) => {
+        field.style.display = isPair ? "" : "none";
+      });
+      const partnerInput = document.getElementById("participant-partner");
+      const partnerGender = document.getElementById("participant-partner-gender");
+      if (partnerInput) partnerInput.required = isPair;
+      if (partnerGender) {
+        partnerGender.required = isPair;
+        if (isPair && !partnerGender.value) {
+          partnerGender.value = event.target.value === "md" ? "M" : event.target.value === "wd" ? "F" : "";
+        }
       }
       return;
     }
@@ -6801,6 +7115,7 @@ button.management-row:hover {
     const entry = state.participants.find((item) => item.id === id);
     if (!entry) return;
     state.participants = state.participants.filter((item) => item.id !== id);
+    selectedParticipantIds.delete(id);
     if (!groupHasOtherEntry(entry)) {
       // The person may have registrations in other events; keep the stable person id alive there.
     }
@@ -6874,6 +7189,17 @@ button.management-row:hover {
         ui.modal = { type: "accounts", payload: {} };
         renderApp();
         toast("账号已删除");
+      } else if (action === "batch-delete-participants-confirm") {
+        const ids = new Set(selectedParticipantIds);
+        const removed = state.participants.filter((entry) => ids.has(entry.id));
+        state.participants = state.participants.filter((entry) => !ids.has(entry.id));
+        state.config.demo = state.participants.some((entry) => entry.demo);
+        selectedParticipantIds.clear();
+        ui.participantSelectMode = false;
+        saveState();
+        closeModal();
+        renderApp();
+        toast(`已删除 ${removed.length} 条报名记录`);
       }
     } catch (error) {
       closeModal();
@@ -6903,6 +7229,7 @@ button.management-row:hover {
     try {
       const adminOnlyActions = new Set([
         "open-participant", "edit-participant", "delete-participant", "open-batch-import",
+        "toggle-participant-select", "select-all-participants", "batch-delete-participants",
         "export-csv", "create-draw", "draw-all", "redraw",
         "auto-schedule", "generate-quarter", "generate-semi", "generate-medals",
         "open-score", "open-next-score", "open-schedule", "unschedule",
@@ -6937,6 +7264,28 @@ button.management-row:hover {
         openModal("participant", { id });
       } else if (action === "open-batch-import") {
         openModal("batch");
+      } else if (action === "toggle-participant-select") {
+        ui.participantSelectMode = !ui.participantSelectMode;
+        selectedParticipantIds.clear();
+        renderApp();
+      } else if (action === "select-all-participants") {
+        const visibleEntries = filteredParticipants();
+        const allSelected = allVisibleParticipantsSelected(visibleEntries);
+        visibleEntries.forEach((entry) => {
+          if (allSelected) selectedParticipantIds.delete(entry.id);
+          else selectedParticipantIds.add(entry.id);
+        });
+        renderApp();
+      } else if (action === "batch-delete-participants") {
+        if (!selectedParticipantIds.size) throw new Error("请先选择要删除的报名记录");
+        openModal("confirm", {
+          title: "批量删除参赛记录",
+          heading: `删除已选择的 ${selectedParticipantIds.size} 条报名记录？`,
+          body: "双打项目会按整条组合记录删除。如果这些人员已经参与抽签，对应项目会提示重新抽签。此操作无法撤销。",
+          confirmAction: "batch-delete-participants-confirm",
+          confirmLabel: "确认批量删除",
+          danger: true,
+        });
       } else if (action === "delete-participant") {
         const entry = state.participants.find((item) => item.id === id);
         if (!entry) return;
